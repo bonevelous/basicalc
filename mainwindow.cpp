@@ -30,6 +30,7 @@ operEnum curOper = CALC_NONE;
 //double storedMem = 0.0;
 bool inputMode = false;
 bool setNum = false;
+
 double calcMem = 0.0;
 
 QPushButton *calcDigit[10];
@@ -38,6 +39,7 @@ QPushButton *ansButton;
 QPushButton *allClearButton;
 QPushButton *swapButton;
 QPushButton *delButton;
+QPushButton *dotButton;
 
 QPushButton *memStorBtn;
 QPushButton *memRecBtn;
@@ -94,6 +96,9 @@ MainWindow::MainWindow(QWidget *parent) :
 	ansButton = MainWindow::findChild<QPushButton *>("buttonAnswer");
 	connect(ansButton, SIGNAL(released()), this, SLOT(answerPress()));
 
+	dotButton = MainWindow::findChild<QPushButton *>("buttonDot");
+	connect(dotButton, SIGNAL(released()), this, SLOT(addPoint()));
+
 	delButton = MainWindow::findChild<QPushButton *>("buttonBack");
 	connect(delButton, SIGNAL(released()), this, SLOT(deleteChar()));
 
@@ -117,9 +122,26 @@ void MainWindow::digitRelease() {
 		inputMode = true;
 	} else {
 		QString curVal = dspTxt + button->text();
-		double tempMem = curVal.toDouble();
-		ui->calcEntry->setText(QString::number(tempMem, 'g', MAX_DISPLAY_NUM));
+		ui->calcEntry->setText(curVal);
 	}
+}
+
+void MainWindow::addPoint() {
+	QPushButton *button = (QPushButton *)sender();
+	QString dspTxt = ui->calcEntry->text();
+	if (!ui->calcEntry->text().contains('.')) {
+
+		if (inputMode == false) {
+			calcMem = 0;
+			inputMode = true;
+		}
+
+		QString curVal = dspTxt + button->text();
+		ui->calcEntry->setText(curVal);
+	} else {
+		qDebug() << "Cannot set fractional, already fractional";
+	}
+	inputMode = true;
 }
 
 void calcAnswer(double gMem, double *gAns) {
@@ -218,6 +240,7 @@ void MainWindow::swapSign() {
 void MainWindow::answerPress() {
 	inputMode = false;
 	setNum = false;
+
 	QString dspTxt = ui->calcEntry->text();
 	double dspMem = dspTxt.toDouble();
 	double calcAns = 0;

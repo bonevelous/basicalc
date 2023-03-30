@@ -21,6 +21,6 @@
 #ifndef MACROS_H
 #define MACROS_H
 
-#define MAX_DISPLAY_NUM 16
+#define MAX_DISPLAY_NUM 8
 
 #endif //MACROS_H

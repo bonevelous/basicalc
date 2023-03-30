@@ -23,6 +23,7 @@
 
 #include <QMainWindow>
 #include <QTextStream>
+#include <QDebug>
 #include <QAction>
 #include <QString>
 
@@ -48,7 +49,7 @@ class MainWindow : public QMainWindow {
 		void swapSign();
 		void answerPress();
 		void deleteChar();
-		//void setFractional;
+		void addPoint();
 };
 
 #endif //MAINWINDOW_H
