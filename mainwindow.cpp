@@ -32,16 +32,17 @@ bool setNum = false;
 double calcMem = 0.0;
 
 QPushButton *calcDigit[10];
+QPushButton *ansButton;
+
 QPushButton *allClearButton;
 QPushButton *swapButton;
+QPushButton *delButton;
 
 FuncButton *addButton;
 FuncButton *subButton;
 FuncButton *mulButton;
 FuncButton *divButton;
 FuncButton *modButton;
-
-QPushButton *ansButton;
 
 MainWindow::MainWindow(QWidget *parent) : 
 	QMainWindow (parent), ui(new Ui::MainWindow) {
@@ -83,6 +84,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
 	ansButton = MainWindow::findChild<QPushButton *>("buttonAnswer");
 	connect(ansButton, SIGNAL(released()), this, SLOT(answerPress()));
+
+	delButton = MainWindow::findChild<QPushButton *>("buttonBack");
+	connect(delButton, SIGNAL(released()), this, SLOT(deleteChar()));
 
 }
 
@@ -193,4 +197,15 @@ void MainWindow::answerPress() {
 		ui->calcEntry->setText("ERROR");
 	}
 	curOper = CALC_NONE;
+}
+
+void MainWindow::deleteChar() {
+	QString dspTxt = ui->calcEntry->text();
+	if (dspTxt.length() > 1) {
+		dspTxt.chop(1);
+	} else {
+		dspTxt = "0";
+	}
+
+	ui->calcEntry->setText(dspTxt);
 }

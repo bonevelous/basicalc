@@ -46,6 +46,7 @@ class MainWindow : public QMainWindow {
 		void operPress();
 		void swapSign();
 		void answerPress();
+		void deleteChar();
 };
 
 #endif //MAINWINDOW_H
