@@ -25,9 +25,6 @@
 #include "enums.h"
 
 class FuncButton : public QPushButton {
-
-	//Q_OBJECT
-
 	public:
 		FuncButton(QWidget *parent = nullptr);
 		~FuncButton();

@@ -1,5 +1,7 @@
 basicalc
 Makefile
+moc_*.h
+ui_*.h
 *.log
 *.moc
 *.o

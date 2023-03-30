@@ -19,6 +19,7 @@
 *******************************************************************************/
 
 #include "enums.h"
+#include "macros.h"
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "funcbutton.h"
@@ -42,7 +43,7 @@ FuncButton *addButton;
 FuncButton *subButton;
 FuncButton *mulButton;
 FuncButton *divButton;
-FuncButton *modButton;
+//FuncButton *modButton;
 
 QAction *quitAct;
 
@@ -80,9 +81,9 @@ MainWindow::MainWindow(QWidget *parent) :
 	divButton->setFunction(CALC_DIVIDE);
 	connect(divButton, SIGNAL(released()), this, SLOT(operPress()));
 
-	modButton = MainWindow::findChild<FuncButton *>("buttonModulus");
+	/*modButton = MainWindow::findChild<FuncButton *>("buttonModulus");
 	modButton->setFunction(CALC_MODULUS);
-	connect(modButton, SIGNAL(released()), this, SLOT(operPress()));
+	connect(modButton, SIGNAL(released()), this, SLOT(operPress()));*/
 
 	ansButton = MainWindow::findChild<QPushButton *>("buttonAnswer");
 	connect(ansButton, SIGNAL(released()), this, SLOT(answerPress()));
@@ -103,6 +104,9 @@ void MainWindow::digitRelease() {
 	QString dspTxt = ui->calcEntry->text();
 
 	if (inputMode == false) {
+		if (curOper == CALC_NONE || curOper == CALC_ERROR) {
+			calcMem = 0;
+		}
 		ui->calcEntry->setText(button->text());
 		inputMode = true;
 	} else {
@@ -113,6 +117,7 @@ void MainWindow::digitRelease() {
 }
 
 void calcAnswer(double gMem, double *gAns) {
+	//int gAnsInt = 0;
 	switch (curOper) {
 		case CALC_ADD:
 			*gAns = calcMem + gMem;
@@ -135,13 +140,15 @@ void calcAnswer(double gMem, double *gAns) {
 				calcMem = 0;
 			}
 			break;
-		case CALC_MODULUS:
-			*gAns = fmod(calcMem, gMem);
-			calcMem = *gAns;
-			break;
+		/*case CALC_MODULUS:
+			gAnsInt = ((int) calcMem) % ((int) gMem);
+			calcMem = (double) gAnsInt;
+			break;*/
 		default:
 			break;
 	}
+
+	inputMode = false;
 }
 
 void MainWindow::operPress() {
@@ -173,9 +180,25 @@ void MainWindow::operPress() {
 		default:
 			break;
 	}
+
+	if (setNum == true) {
+		QString dspTxt = ui->calcEntry->text();
+		double dspMem = dspTxt.toDouble();
+		double calcAns = 0;
+		calcAnswer(dspMem, &calcAns);
+
+		if (curOper != CALC_ERROR) {
+			ui->calcEntry->setText(QString::number(calcAns, 'g', MAX_DISPLAY_NUM));
+		} else {
+			ui->calcEntry->setText("ERROR");
+		}
+	} else {
+		setNum = true;
+	}
 }
 
 void MainWindow::allClear() {
+	setNum = false;
 	inputMode = false;
 	curOper = CALC_NONE;
 	ui->calcEntry->setText("0");
@@ -189,6 +212,7 @@ void MainWindow::swapSign() {
 
 void MainWindow::answerPress() {
 	inputMode = false;
+	setNum = false;
 	QString dspTxt = ui->calcEntry->text();
 	double dspMem = dspTxt.toDouble();
 	double calcAns = 0;
@@ -200,6 +224,7 @@ void MainWindow::answerPress() {
 	} else {
 		ui->calcEntry->setText("ERROR");
 	}
+
 	curOper = CALC_NONE;
 }
 
