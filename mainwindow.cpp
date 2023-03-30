@@ -43,7 +43,7 @@ FuncButton *addButton;
 FuncButton *subButton;
 FuncButton *mulButton;
 FuncButton *divButton;
-//FuncButton *modButton;
+FuncButton *modButton;
 
 QAction *quitAct;
 
@@ -81,9 +81,9 @@ MainWindow::MainWindow(QWidget *parent) :
 	divButton->setFunction(CALC_DIVIDE);
 	connect(divButton, SIGNAL(released()), this, SLOT(operPress()));
 
-	/*modButton = MainWindow::findChild<FuncButton *>("buttonModulus");
+	modButton = MainWindow::findChild<FuncButton *>("buttonModulus");
 	modButton->setFunction(CALC_MODULUS);
-	connect(modButton, SIGNAL(released()), this, SLOT(operPress()));*/
+	connect(modButton, SIGNAL(released()), this, SLOT(operPress()));
 
 	ansButton = MainWindow::findChild<QPushButton *>("buttonAnswer");
 	connect(ansButton, SIGNAL(released()), this, SLOT(answerPress()));
@@ -117,7 +117,6 @@ void MainWindow::digitRelease() {
 }
 
 void calcAnswer(double gMem, double *gAns) {
-	//int gAnsInt = 0;
 	switch (curOper) {
 		case CALC_ADD:
 			*gAns = calcMem + gMem;
@@ -140,10 +139,10 @@ void calcAnswer(double gMem, double *gAns) {
 				calcMem = 0;
 			}
 			break;
-		/*case CALC_MODULUS:
-			gAnsInt = ((int) calcMem) % ((int) gMem);
-			calcMem = (double) gAnsInt;
-			break;*/
+		case CALC_MODULUS:
+			*gAns = round(fmod(calcMem, gMem));
+			calcMem = *gAns;
+			break;
 		default:
 			break;
 	}
@@ -175,7 +174,7 @@ void MainWindow::operPress() {
 			curOper = CALC_DIVIDE;
 			break;
 		case CALC_MODULUS:
-			curOper = CALC_DIVIDE;
+			curOper = CALC_MODULUS;
 			break;
 		default:
 			break;
