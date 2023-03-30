@@ -121,27 +121,30 @@ void MainWindow::digitRelease() {
 		ui->calcEntry->setText(button->text());
 		inputMode = true;
 	} else {
-		QString curVal = dspTxt + button->text();
-		ui->calcEntry->setText(curVal);
+		if (ui->calcEntry->text().length() < MAX_DISPLAY_NUM) {
+			QString curVal = dspTxt + button->text();
+			ui->calcEntry->setText(curVal);
+		} else {
+			qDebug() << "Max display numbers reached";
+		}
 	}
 }
 
 void MainWindow::addPoint() {
 	QPushButton *button = (QPushButton *)sender();
 	QString dspTxt = ui->calcEntry->text();
-	if (!ui->calcEntry->text().contains('.')) {
 
-		if (inputMode == false) {
-			calcMem = 0;
-			inputMode = true;
-		}
-
-		QString curVal = dspTxt + button->text();
-		ui->calcEntry->setText(curVal);
+	if (inputMode == false) {
+		inputMode = true;
+		ui->calcEntry->setText("0.");
 	} else {
-		qDebug() << "Cannot set fractional, already fractional";
+		if (!ui->calcEntry->text().contains('.')) {
+			QString curVal = dspTxt + button->text();
+			ui->calcEntry->setText(curVal);
+		} else {
+			qDebug() << "Cannot set fractional, already fractional";
+		}
 	}
-	inputMode = true;
 }
 
 void calcAnswer(double gMem, double *gAns) {
