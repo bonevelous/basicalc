@@ -48,6 +48,7 @@ class MainWindow : public QMainWindow {
 		void swapSign();
 		void answerPress();
 		void deleteChar();
+		//void setFractional;
 };
 
 #endif //MAINWINDOW_H

@@ -39,6 +39,12 @@ QPushButton *allClearButton;
 QPushButton *swapButton;
 QPushButton *delButton;
 
+QPushButton *memStorBtn;
+QPushButton *memRecBtn;
+QPushButton *memClsBtn;
+QPushButton *memAddBtn;
+QPushButton *memSubBtn;
+
 FuncButton *addButton;
 FuncButton *subButton;
 FuncButton *mulButton;

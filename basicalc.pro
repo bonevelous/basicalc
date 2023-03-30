@@ -18,8 +18,18 @@
 #
 ################################################################################
 
+VERSION_MAJOR = 1
+VERSION_MINOR = 0
+VERSION_BUILD = 0
+
 TEMPLATE += app
 CONFIG += c++20
+
+DEFINES += "VERSION_MAJOR=$$VERSION_MAJOR"\
+	"VERSION_MINOR=$$VERSION_MINOR"\
+	"VERSION_BUILD=$$VERSION_BUILD"
+
+VERSION += $${VERSION_MAJOR}.$${VERSION_MINOR}.$${VERSION_BUILD}
 
 SOURCES += \
 	main.cpp \
