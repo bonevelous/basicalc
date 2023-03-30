@@ -1,4 +1,4 @@
-/********************************************************************************
+/*******************************************************************************
 
     Basicalc - Basic QT Calculator
     Copyright (C) 2023	Matthew Gobbi
@@ -16,38 +16,11 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-********************************************************************************/
+*******************************************************************************/
 
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef MACROS_H
+#define MACROS_H
 
-#include <QMainWindow>
-#include <QTextStream>
-#include <QAction>
-#include <QString>
+#define MAX_DISPLAY_NUM 32
 
-QT_BEGIN_NAMESPACE
-namespace Ui { class MainWindow; }
-QT_END_NAMESPACE
-
-class MainWindow : public QMainWindow {
-
-	Q_OBJECT
-
-	public:
-		MainWindow(QWidget *parent = nullptr);
-		~MainWindow();
-
-	private:
-		Ui::MainWindow *ui;
-
-	private slots:
-		void digitRelease();
-		void allClear();
-		void operPress();
-		void swapSign();
-		void answerPress();
-		void deleteChar();
-};
-
-#endif //MAINWINDOW_H
+#endif //MACROS_H

@@ -108,7 +108,7 @@ void MainWindow::digitRelease() {
 	} else {
 		QString curVal = dspTxt + button->text();
 		double tempMem = curVal.toDouble();
-		ui->calcEntry->setText(QString::number(tempMem, 'g', 16));
+		ui->calcEntry->setText(QString::number(tempMem, 'g', MAX_DISPLAY_NUM));
 	}
 }
 
@@ -184,7 +184,7 @@ void MainWindow::allClear() {
 void MainWindow::swapSign() {
 	QString dspTxt = ui->calcEntry->text();
 	double dspMem = dspTxt.toDouble() * -1;
-	ui->calcEntry->setText(QString::number(dspMem, 'g', 16));
+	ui->calcEntry->setText(QString::number(dspMem, 'g', MAX_DISPLAY_NUM));
 }
 
 void MainWindow::answerPress() {
@@ -196,7 +196,7 @@ void MainWindow::answerPress() {
 	calcAnswer(dspMem, &calcAns);
 
 	if (curOper != CALC_ERROR) {
-		ui->calcEntry->setText(QString::number(calcAns, 'g', 16));
+		ui->calcEntry->setText(QString::number(calcAns, 'g', MAX_DISPLAY_NUM));
 	} else {
 		ui->calcEntry->setText("ERROR");
 	}
