@@ -44,6 +44,8 @@ FuncButton *mulButton;
 FuncButton *divButton;
 FuncButton *modButton;
 
+QAction *quitAct;
+
 MainWindow::MainWindow(QWidget *parent) : 
 	QMainWindow (parent), ui(new Ui::MainWindow) {
 
@@ -88,6 +90,8 @@ MainWindow::MainWindow(QWidget *parent) :
 	delButton = MainWindow::findChild<QPushButton *>("buttonBack");
 	connect(delButton, SIGNAL(released()), this, SLOT(deleteChar()));
 
+	quitAct = MainWindow::findChild<QAction *>("actionQuit");
+	connect(quitAct, &QAction::triggered, qApp, &QCoreApplication::quit, Qt::QueuedConnection);
 }
 
 MainWindow::~MainWindow() {

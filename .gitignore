@@ -1,3 +1,9 @@
 basicalc
 Makefile
 *.log
+*.moc
+*.o
+*.exe
+*.dll
+*.a
+*.so
