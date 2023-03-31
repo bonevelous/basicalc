@@ -20,18 +20,22 @@
 
 #include "enums.h"
 #include "macros.h"
+
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "funcbutton.h"
+
 #include "calcfunctions.h"
 
-operEnum curOper = CALC_NONE;
+#include "funcbutton.h"
+#include "membutton.h"
 
-//double storedMem = 0.0;
+operEnum curOper = OPERATION_NONE;
+
 bool inputMode = false;
 bool setNum = false;
 
 double calcMem = 0.0;
+double lastAns = 0.0;
 
 QPushButton *calcDigit[10];
 QPushButton *ansButton;
@@ -41,11 +45,11 @@ QPushButton *swapButton;
 QPushButton *delButton;
 QPushButton *dotButton;
 
-QPushButton *memStorBtn;
-QPushButton *memRecBtn;
-QPushButton *memClsBtn;
-QPushButton *memAddBtn;
-QPushButton *memSubBtn;
+MemButton *memSavBtn;
+MemButton *memClsBtn;
+MemButton *memRecBtn;
+MemButton *memAddBtn;
+MemButton *memSubBtn;
 
 FuncButton *addButton;
 FuncButton *subButton;
@@ -60,7 +64,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 	ui->setupUi(this);
 
-	ui->calcEntry->setText(QString::number(calcMem));
+	ui->calcEntry->setText(QString::number(lastAns));
 	for (int i = 0; i < 10; i++) {
 		QString curDigit = "button" + QString::number(i);
 		calcDigit[i] = MainWindow::findChild<QPushButton *>(curDigit);
@@ -74,23 +78,23 @@ MainWindow::MainWindow(QWidget *parent) :
 	connect(swapButton, SIGNAL(released()), this, SLOT(swapSign()));
 
 	addButton = MainWindow::findChild<FuncButton *>("buttonAdd");
-	addButton->setFunction(CALC_ADD);
+	addButton->setFunction(OPERATION_ADD);
 	connect(addButton, SIGNAL(released()), this, SLOT(operPress()));
 
 	subButton = MainWindow::findChild<FuncButton *>("buttonSubtract");
-	subButton->setFunction(CALC_SUBTRACT);
+	subButton->setFunction(OPERATION_SUBTRACT);
 	connect(subButton, SIGNAL(released()), this, SLOT(operPress()));
 
 	mulButton = MainWindow::findChild<FuncButton *>("buttonMultiply");
-	mulButton->setFunction(CALC_MULTIPLY);
+	mulButton->setFunction(OPERATION_MULTIPLY);
 	connect(mulButton, SIGNAL(released()), this, SLOT(operPress()));
 
 	divButton = MainWindow::findChild<FuncButton *>("buttonDivide");
-	divButton->setFunction(CALC_DIVIDE);
+	divButton->setFunction(OPERATION_DIVIDE);
 	connect(divButton, SIGNAL(released()), this, SLOT(operPress()));
 
 	modButton = MainWindow::findChild<FuncButton *>("buttonModulus");
-	modButton->setFunction(CALC_MODULUS);
+	modButton->setFunction(OPERATION_MODULUS);
 	connect(modButton, SIGNAL(released()), this, SLOT(operPress()));
 
 	ansButton = MainWindow::findChild<QPushButton *>("buttonAnswer");
@@ -102,6 +106,26 @@ MainWindow::MainWindow(QWidget *parent) :
 	delButton = MainWindow::findChild<QPushButton *>("buttonBack");
 	connect(delButton, SIGNAL(released()), this, SLOT(deleteChar()));
 
+	memSavBtn = MainWindow::findChild<MemButton *>("buttonMS");
+	memSavBtn->setMemFunc(MEMORY_STORE);
+	connect(memSavBtn, &MemButton::released, this, &MainWindow::memoryPress);
+
+	memClsBtn = MainWindow::findChild<MemButton *>("buttonMC");
+	memClsBtn->setMemFunc(MEMORY_CLEAR);
+	connect(memClsBtn, &MemButton::released, this, &MainWindow::memoryPress);
+
+	memRecBtn = MainWindow::findChild<MemButton *>("buttonMR");
+	memRecBtn->setMemFunc(MEMORY_RECALL);
+	connect(memRecBtn, &MemButton::released, this, &MainWindow::memoryPress);
+
+	memAddBtn = MainWindow::findChild<MemButton *>("buttonMAdd");
+	memAddBtn->setMemFunc(MEMORY_ADD);
+	connect(memAddBtn, &MemButton::released, this, &MainWindow::memoryPress);
+
+	memSubBtn = MainWindow::findChild<MemButton *>("buttonMSub");
+	memSubBtn->setMemFunc(MEMORY_SUBTRACT);
+	connect(memSubBtn, &MemButton::released, this, &MainWindow::memoryPress);
+
 	quitAct = MainWindow::findChild<QAction *>("actionQuit");
 	connect(quitAct, &QAction::triggered, qApp, &QCoreApplication::quit, Qt::QueuedConnection);
 }
@@ -112,11 +136,11 @@ MainWindow::~MainWindow() {
 
 void MainWindow::digitRelease() {
 	QPushButton *button = (QPushButton *)sender();
-	QString dspTxt = ui->calcEntry->text();
+	QString dspText = ui->calcEntry->text();
 
 	if (inputMode == false) {
-		if (curOper == CALC_NONE || curOper == CALC_ERROR) {
-			calcMem = 0;
+		if (curOper == OPERATION_NONE || curOper == OPERATION_ERROR) {
+			lastAns = 0;
 		}
 		ui->calcEntry->setText(button->text());
 		if (ui->calcEntry->text() != "0") {
@@ -124,7 +148,7 @@ void MainWindow::digitRelease() {
 		}
 	} else {
 		if (ui->calcEntry->text().length() < MAX_DISPLAY_NUM) {
-			QString curVal = dspTxt + button->text();
+			QString curVal = dspText + button->text();
 			ui->calcEntry->setText(curVal);
 		} else {
 			qDebug() << "Max display numbers reached";
@@ -134,14 +158,14 @@ void MainWindow::digitRelease() {
 
 void MainWindow::addPoint() {
 	QPushButton *button = (QPushButton *)sender();
-	QString dspTxt = ui->calcEntry->text();
+	QString dspText = ui->calcEntry->text();
 
 	if (inputMode == false) {
 		inputMode = true;
 		ui->calcEntry->setText("0.");
 	} else {
 		if (!ui->calcEntry->text().contains('.')) {
-			QString curVal = dspTxt + button->text();
+			QString curVal = dspText + button->text();
 			ui->calcEntry->setText(curVal);
 		} else {
 			qDebug() << "Cannot set fractional, already fractional";
@@ -151,30 +175,30 @@ void MainWindow::addPoint() {
 
 void calcAnswer(double gMem, double *gAns) {
 	switch (curOper) {
-		case CALC_ADD:
-			*gAns = calcMem + gMem;
-			calcMem = *gAns;
+		case OPERATION_ADD:
+			*gAns = lastAns + gMem;
+			lastAns = *gAns;
 			break;
-		case CALC_SUBTRACT:
-			*gAns = calcMem - gMem;
-			calcMem = *gAns;
+		case OPERATION_SUBTRACT:
+			*gAns = lastAns - gMem;
+			lastAns = *gAns;
 			break;
-		case CALC_MULTIPLY:
-			*gAns = calcMem * gMem;
-			calcMem = *gAns;
+		case OPERATION_MULTIPLY:
+			*gAns = lastAns * gMem;
+			lastAns = *gAns;
 			break;
-		case CALC_DIVIDE:
+		case OPERATION_DIVIDE:
 			if (gMem != 0) {
-				*gAns = calcMem / gMem;
-				calcMem = *gAns;
+				*gAns = lastAns / gMem;
+				lastAns = *gAns;
 			} else {
-				curOper = CALC_ERROR;
-				calcMem = 0;
+				curOper = OPERATION_ERROR;
+				lastAns = 0;
 			}
 			break;
-		case CALC_MODULUS:
-			*gAns = round(fmod(calcMem, gMem));
-			calcMem = *gAns;
+		case OPERATION_MODULUS:
+			*gAns = round(fmod(lastAns, gMem));
+			lastAns = *gAns;
 			break;
 		default:
 			break;
@@ -187,39 +211,39 @@ void MainWindow::operPress() {
 	QTextStream out(stdout);
 
 	FuncButton *button = (FuncButton *)sender();
-	QString dspTxt = ui->calcEntry->text();
+	QString dspText = ui->calcEntry->text();
 	operEnum gFunc = button->function();
-	calcMem = dspTxt.toDouble();
+	lastAns = dspText.toDouble();
 
 	inputMode = false;
 
 	switch (gFunc) {
-		case CALC_ADD:
-			curOper = CALC_ADD;
+		case OPERATION_ADD:
+			curOper = OPERATION_ADD;
 			break;
-		case CALC_SUBTRACT:
-			curOper = CALC_SUBTRACT;
+		case OPERATION_SUBTRACT:
+			curOper = OPERATION_SUBTRACT;
 			break;
-		case CALC_MULTIPLY:
-			curOper = CALC_MULTIPLY;
+		case OPERATION_MULTIPLY:
+			curOper = OPERATION_MULTIPLY;
 			break;
-		case CALC_DIVIDE:
-			curOper = CALC_DIVIDE;
+		case OPERATION_DIVIDE:
+			curOper = OPERATION_DIVIDE;
 			break;
-		case CALC_MODULUS:
-			curOper = CALC_MODULUS;
+		case OPERATION_MODULUS:
+			curOper = OPERATION_MODULUS;
 			break;
 		default:
 			break;
 	}
 
 	if (setNum == true) {
-		QString dspTxt = ui->calcEntry->text();
-		double dspMem = dspTxt.toDouble();
+		QString dspText = ui->calcEntry->text();
+		double dspMem = dspText.toDouble();
 		double calcAns = 0;
 		calcAnswer(dspMem, &calcAns);
 
-		if (curOper != CALC_ERROR) {
+		if (curOper != OPERATION_ERROR) {
 			ui->calcEntry->setText(QString::number(calcAns, 'g', MAX_DISPLAY_NUM));
 		} else {
 			ui->calcEntry->setText("ERROR");
@@ -232,13 +256,13 @@ void MainWindow::operPress() {
 void MainWindow::allClear() {
 	setNum = false;
 	inputMode = false;
-	curOper = CALC_NONE;
+	curOper = OPERATION_NONE;
 	ui->calcEntry->setText("0");
 }
 
 void MainWindow::swapSign() {
-	QString dspTxt = ui->calcEntry->text();
-	double dspMem = dspTxt.toDouble() * -1;
+	QString dspText = ui->calcEntry->text();
+	double dspMem = dspText.toDouble() * -1;
 	ui->calcEntry->setText(QString::number(dspMem, 'g', MAX_DISPLAY_NUM));
 }
 
@@ -247,29 +271,69 @@ void MainWindow::answerPress() {
 		setNum = false;
 		inputMode = false;
 
-		QString dspTxt = ui->calcEntry->text();
-		double dspMem = dspTxt.toDouble();
+		QString dspText = ui->calcEntry->text();
+		double dspMem = dspText.toDouble();
 		double calcAns = 0;
 
 		calcAnswer(dspMem, &calcAns);
 
-		if (curOper != CALC_ERROR) {
+		if (curOper != OPERATION_ERROR) {
 			ui->calcEntry->setText(QString::number(calcAns, 'g', MAX_DISPLAY_NUM));
 		} else {
 			ui->calcEntry->setText("ERROR");
 		}
 
-		curOper = CALC_NONE;
+		curOper = OPERATION_NONE;
 	}
 }
 
 void MainWindow::deleteChar() {
-	QString dspTxt = ui->calcEntry->text();
-	if (dspTxt.length() > 1) {
-		dspTxt.chop(1);
+	QString dspText = ui->calcEntry->text();
+	if (dspText.length() > 1) {
+		dspText.chop(1);
 	} else {
-		dspTxt = "0";
+		dspText = "0";
 	}
 
-	ui->calcEntry->setText(dspTxt);
+	ui->calcEntry->setText(dspText);
+}
+
+void MainWindow::memoryPress() {
+	MemButton *button = (MemButton *)sender();
+	memBtnEnum gMem = button->memFunc();
+	QString dspText = ui->calcEntry->text();
+	double dspMem = dspText.toDouble();
+
+	switch (gMem) {
+		case MEMORY_STORE:
+			calcMem = dspMem;
+			memRecBtn->setEnabled(true);
+			break;
+		case MEMORY_CLEAR:
+			calcMem = 0.0;
+			memRecBtn->setEnabled(false);
+			break;
+		case MEMORY_RECALL:
+			dspMem = calcMem;
+			ui->calcEntry->setText(QString::number(dspMem, 'g', MAX_DISPLAY_NUM));
+			break;
+		case MEMORY_ADD:
+			if (memRecBtn->isEnabled() == false) {
+				calcMem = dspMem;
+				memRecBtn->setEnabled(true);
+			} else {
+				calcMem += dspMem;
+			}
+			break;
+		case MEMORY_SUBTRACT:
+			if (memRecBtn->isEnabled() == false) {
+				calcMem = -dspMem;
+				memRecBtn->setEnabled(true);
+			} else {
+				calcMem -= dspMem;
+			}
+			break;
+		default:
+			break;
+	}
 }

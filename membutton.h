@@ -1,4 +1,4 @@
-/********************************************************************************
+/*******************************************************************************
 
     Basicalc - Basic QT Calculator
     Copyright (C) 2023	Matthew Gobbi
@@ -16,41 +16,24 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-********************************************************************************/
+*******************************************************************************/
 
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef MEMBUTTON_H
+#define MEMBUTTON_H
 
-#include <QMainWindow>
-#include <QTextStream>
-#include <QDebug>
-#include <QAction>
-#include <QString>
+#include <QPushButton>
+#include "enums.h"
 
-QT_BEGIN_NAMESPACE
-namespace Ui { class MainWindow; }
-QT_END_NAMESPACE
-
-class MainWindow : public QMainWindow {
-
-	Q_OBJECT
-
+class MemButton : public QPushButton {
 	public:
-		MainWindow(QWidget *parent = nullptr);
-		~MainWindow();
+		MemButton(QWidget *parent = nullptr);
+		~MemButton();
+
+		memBtnEnum memFunc();
+		void setMemFunc(memBtnEnum _memFunc);
 
 	private:
-		Ui::MainWindow *ui;
-
-	private slots:
-		void digitRelease();
-		void allClear();
-		void operPress();
-		void swapSign();
-		void answerPress();
-		void deleteChar();
-		void addPoint();
-		void memoryPress();
+		memBtnEnum m_memFunc;
 };
 
-#endif //MAINWINDOW_H
+#endif //MEMBUTTON_H

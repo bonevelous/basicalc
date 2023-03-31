@@ -18,26 +18,18 @@
 
 *******************************************************************************/
 
-#ifndef ENUMS_H
-#define ENUMS_H
+#include "membutton.h"
 
-typedef enum operEnum {
-	OPERATION_NONE,
-	OPERATION_ERROR,
-	OPERATION_ADD,
-	OPERATION_SUBTRACT,
-	OPERATION_MULTIPLY,
-	OPERATION_DIVIDE,
-	OPERATION_MODULUS
-} operEnum;
+MemButton::MemButton(QWidget *parent) : QPushButton(parent) {
+}
 
-typedef enum memBtnEnum {
-	MEMORY_DEFAULT,
-	MEMORY_STORE,
-	MEMORY_CLEAR,
-	MEMORY_RECALL,
-	MEMORY_ADD,
-	MEMORY_SUBTRACT
-} memBtnEnum;
+MemButton::~MemButton(){
+}
 
-#endif //ENUMS_H
+memBtnEnum MemButton::memFunc() {
+	return m_memFunc;
+}
+
+void MemButton::setMemFunc(memBtnEnum _memFunc) {
+	m_memFunc = _memFunc;
+}

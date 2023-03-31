@@ -34,11 +34,13 @@ VERSION += $${VERSION_MAJOR}.$${VERSION_MINOR}.$${VERSION_BUILD}
 SOURCES += \
 	main.cpp \
 	mainwindow.cpp \
-	funcbutton.cpp
+	funcbutton.cpp \
+	membutton.cpp
 
 HEADERS += \
-	mainwindow.h
-	funcbutton.h
+	mainwindow.h \
+	funcbutton.h \
+	membutton.h
 
 FORMS += \
 	mainwindow.ui
