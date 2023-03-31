@@ -46,7 +46,6 @@ class MainWindow : public QMainWindow {
 		void digitRelease();
 		void allClear();
 		void operPress();
-		void swapSign();
 		void answerPress();
 		void deleteChar();
 		void addPoint();

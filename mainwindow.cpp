@@ -41,7 +41,6 @@ QPushButton *calcDigit[10];
 QPushButton *ansButton;
 
 QPushButton *allClearButton;
-QPushButton *swapButton;
 QPushButton *delButton;
 QPushButton *dotButton;
 
@@ -51,10 +50,13 @@ MemButton *memRecBtn;
 MemButton *memAddBtn;
 MemButton *memSubBtn;
 
+FuncButton *swapButton;
 FuncButton *addButton;
 FuncButton *subButton;
 FuncButton *mulButton;
 FuncButton *divButton;
+//FuncButton *powButton;
+//FuncButton *sqrtButton;
 FuncButton *modButton;
 
 QAction *quitAct;
@@ -72,41 +74,42 @@ MainWindow::MainWindow(QWidget *parent) :
 	}
 
 	allClearButton = MainWindow::findChild<QPushButton *>("buttonAllCls");
-	connect(allClearButton, SIGNAL(released()), this, SLOT(allClear()));
+	connect(allClearButton, &QPushButton::released, this, &MainWindow::allClear);
 
-	swapButton = MainWindow::findChild<QPushButton *>("buttonSign");
-	connect(swapButton, SIGNAL(released()), this, SLOT(swapSign()));
+	swapButton = MainWindow::findChild<FuncButton *>("buttonSign");
+	swapButton->setFunction(OPERATION_SIGN_SWAP);
+	connect(swapButton, &FuncButton::released, this, &MainWindow::operPress);
 
 	addButton = MainWindow::findChild<FuncButton *>("buttonAdd");
 	addButton->setFunction(OPERATION_ADD);
-	connect(addButton, SIGNAL(released()), this, SLOT(operPress()));
+	connect(addButton, &FuncButton::released, this, &MainWindow::operPress);
 
 	subButton = MainWindow::findChild<FuncButton *>("buttonSubtract");
 	subButton->setFunction(OPERATION_SUBTRACT);
-	connect(subButton, SIGNAL(released()), this, SLOT(operPress()));
+	connect(subButton, &FuncButton::released, this, &MainWindow::operPress);
 
 	mulButton = MainWindow::findChild<FuncButton *>("buttonMultiply");
 	mulButton->setFunction(OPERATION_MULTIPLY);
-	connect(mulButton, SIGNAL(released()), this, SLOT(operPress()));
+	connect(mulButton, &FuncButton::released, this, &MainWindow::operPress);
 
 	divButton = MainWindow::findChild<FuncButton *>("buttonDivide");
 	divButton->setFunction(OPERATION_DIVIDE);
-	connect(divButton, SIGNAL(released()), this, SLOT(operPress()));
+	connect(divButton, &FuncButton::released, this, &MainWindow::operPress);
 
 	modButton = MainWindow::findChild<FuncButton *>("buttonModulus");
 	modButton->setFunction(OPERATION_MODULUS);
-	connect(modButton, SIGNAL(released()), this, SLOT(operPress()));
+	connect(modButton, &FuncButton::released, this, &MainWindow::operPress);
 
 	ansButton = MainWindow::findChild<QPushButton *>("buttonAnswer");
-	connect(ansButton, SIGNAL(released()), this, SLOT(answerPress()));
+	connect(ansButton, &QPushButton::released, this, &MainWindow::answerPress);
 
 	dotButton = MainWindow::findChild<QPushButton *>("buttonDot");
-	connect(dotButton, SIGNAL(released()), this, SLOT(addPoint()));
+	connect(dotButton, &QPushButton::released, this, &MainWindow::addPoint);
 
 	delButton = MainWindow::findChild<QPushButton *>("buttonBack");
-	connect(delButton, SIGNAL(released()), this, SLOT(deleteChar()));
+	connect(delButton, &QPushButton::released, this, &MainWindow::deleteChar);
 
-	memSavBtn = MainWindow::findChild<MemButton *>("buttonMS");
+	/*memSavBtn = MainWindow::findChild<MemButton *>("buttonMS");
 	memSavBtn->setMemFunc(MEMORY_STORE);
 	connect(memSavBtn, &MemButton::released, this, &MainWindow::memoryPress);
 
@@ -124,7 +127,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 	memSubBtn = MainWindow::findChild<MemButton *>("buttonMSub");
 	memSubBtn->setMemFunc(MEMORY_SUBTRACT);
-	connect(memSubBtn, &MemButton::released, this, &MainWindow::memoryPress);
+	connect(memSubBtn, &MemButton::released, this, &MainWindow::memoryPress);*/
 
 	quitAct = MainWindow::findChild<QAction *>("actionQuit");
 	connect(quitAct, &QAction::triggered, qApp, &QCoreApplication::quit, Qt::QueuedConnection);
@@ -200,6 +203,10 @@ void calcAnswer(double gMem, double *gAns) {
 			*gAns = round(fmod(lastAns, gMem));
 			lastAns = *gAns;
 			break;
+		case OPERATION_SIGN_SWAP:
+			*gAns = -gMem;
+			lastAns = *gAns;
+			break;
 		default:
 			break;
 	}
@@ -212,30 +219,12 @@ void MainWindow::operPress() {
 
 	FuncButton *button = (FuncButton *)sender();
 	QString dspText = ui->calcEntry->text();
-	operEnum gFunc = button->function();
+	curOper = button->function();
 	lastAns = dspText.toDouble();
 
-	inputMode = false;
+	if (curOper == OPERATION_SIGN_SWAP) setNum = true;
 
-	switch (gFunc) {
-		case OPERATION_ADD:
-			curOper = OPERATION_ADD;
-			break;
-		case OPERATION_SUBTRACT:
-			curOper = OPERATION_SUBTRACT;
-			break;
-		case OPERATION_MULTIPLY:
-			curOper = OPERATION_MULTIPLY;
-			break;
-		case OPERATION_DIVIDE:
-			curOper = OPERATION_DIVIDE;
-			break;
-		case OPERATION_MODULUS:
-			curOper = OPERATION_MODULUS;
-			break;
-		default:
-			break;
-	}
+	inputMode = false;
 
 	if (setNum == true) {
 		QString dspText = ui->calcEntry->text();
@@ -258,12 +247,6 @@ void MainWindow::allClear() {
 	inputMode = false;
 	curOper = OPERATION_NONE;
 	ui->calcEntry->setText("0");
-}
-
-void MainWindow::swapSign() {
-	QString dspText = ui->calcEntry->text();
-	double dspMem = dspText.toDouble() * -1;
-	ui->calcEntry->setText(QString::number(dspMem, 'g', MAX_DISPLAY_NUM));
 }
 
 void MainWindow::answerPress() {
