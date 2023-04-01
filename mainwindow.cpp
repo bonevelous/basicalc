@@ -61,6 +61,8 @@ FuncButton *sqrtButton;
 FuncButton *modButton;
 
 ConstButton *clearEntryButton;
+ConstButton *piButton;
+ConstButton *eulerButton;
 
 QAction *quitAct;
 
@@ -141,6 +143,14 @@ MainWindow::MainWindow(QWidget *parent) :
 
 	clearEntryButton = MainWindow::findChild<ConstButton *>("buttonClsEntry");
 	connect(clearEntryButton, &ConstButton::released, this, &MainWindow::setDspToConst);
+
+	piButton = MainWindow::findChild<ConstButton *>("buttonPi");
+	piButton->setConst(M_PI);
+	connect(piButton, &ConstButton::released, this, &MainWindow::setDspToConst);
+
+	eulerButton = MainWindow::findChild<ConstButton *>("buttonEuler");
+	eulerButton->setConst(exp(1));
+	connect(eulerButton, &ConstButton::released, this, &MainWindow::setDspToConst);
 
 	quitAct = MainWindow::findChild<QAction *>("actionQuit");
 	connect(quitAct, &QAction::triggered, qApp, &QCoreApplication::quit, Qt::QueuedConnection);
