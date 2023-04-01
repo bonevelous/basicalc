@@ -51,14 +51,27 @@ MemButton *memClsBtn;
 MemButton *memRecBtn;
 MemButton *memAltBtn;
 
-FuncButton *swapButton;
 FuncButton *addButton;
 FuncButton *subButton;
 FuncButton *mulButton;
 FuncButton *divButton;
-FuncButton *squareButton;
-FuncButton *sqrtButton;
+FuncButton *powButton;
+FuncButton *rootButton;
+
+FuncButton *swapButton;
+FuncButton *factButton;
 FuncButton *modButton;
+FuncButton *absButton;
+
+FuncButton *sinButton;
+FuncButton *cosButton;
+FuncButton *tanButton;
+FuncButton *cscButton;
+FuncButton *secButton;
+FuncButton *cotButton;
+
+FuncButton *logButton;
+FuncButton *lnButton;
 
 ConstButton *clearEntryButton;
 ConstButton *piButton;
@@ -101,13 +114,13 @@ MainWindow::MainWindow(QWidget *parent) :
 	divButton->setFunction(OPERATION_DIVIDE);
 	connect(divButton, &FuncButton::released, this, &MainWindow::operPress);
 
-	squareButton = MainWindow::findChild<FuncButton *>("buttonSquare");
-	squareButton->setFunction(OPERATION_POWER);
-	connect(squareButton, &FuncButton::released, this, &MainWindow::operPress);
+	powButton = MainWindow::findChild<FuncButton *>("buttonPower");
+	powButton->setFunction(OPERATION_POWER);
+	connect(powButton, &FuncButton::released, this, &MainWindow::operPress);
 
-	sqrtButton = MainWindow::findChild<FuncButton *>("buttonSquareRoot");
-	sqrtButton->setFunction(OPERATION_SQUARE_ROOT);
-	connect(sqrtButton, &FuncButton::released, this, &MainWindow::operPress);
+	rootButton = MainWindow::findChild<FuncButton *>("buttonRoot");
+	rootButton->setFunction(OPERATION_ROOT);
+	connect(rootButton, &FuncButton::released, this, &MainWindow::operPress);
 
 	modButton = MainWindow::findChild<FuncButton *>("buttonModulus");
 	modButton->setFunction(OPERATION_MODULUS);

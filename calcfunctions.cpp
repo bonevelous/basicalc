@@ -27,12 +27,6 @@ bool calcInstaAns(operEnum _enum) {
 		case OPERATION_SIGN_SWAP:
 			_answer = true;
 			break;
-		case OPERATION_POWER:
-			_answer = true;
-			break;
-		case OPERATION_SQUARE_ROOT:
-			_answer = true;
-			break;
 		default:
 			break;
 	}
@@ -59,11 +53,11 @@ void calcAnswer(operEnum *_enum, double gMem, double *oldAns) {
 			}
 			break;
 		case OPERATION_POWER:
-			*oldAns = *oldAns * *oldAns;
+			*oldAns = pow(*oldAns, gMem);
 			break;
-		case OPERATION_SQUARE_ROOT:
+		case OPERATION_ROOT:
 			if (gMem >= 0) {
-				*oldAns = sqrt(gMem);
+				*oldAns = pow(*oldAns, (1 / gMem));
 			} else {
 				*_enum = OPERATION_ERROR;
 				*oldAns = 0;
