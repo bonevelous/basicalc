@@ -28,6 +28,7 @@
 
 #include "funcbutton.h"
 #include "membutton.h"
+#include "constbutton.h"
 
 operEnum curOper = OPERATION_NONE;
 
@@ -58,6 +59,8 @@ FuncButton *divButton;
 FuncButton *squareButton;
 FuncButton *sqrtButton;
 FuncButton *modButton;
+
+ConstButton *clearEntryButton;
 
 QAction *quitAct;
 
@@ -136,6 +139,9 @@ MainWindow::MainWindow(QWidget *parent) :
 	altButton = MainWindow::findChild<QPushButton *>("buttonAltMode");
 	connect(altButton, &QPushButton::released, this, &MainWindow::altPress);
 
+	clearEntryButton = MainWindow::findChild<ConstButton *>("buttonClsEntry");
+	connect(clearEntryButton, &ConstButton::released, this, &MainWindow::setDspToConst);
+
 	quitAct = MainWindow::findChild<QAction *>("actionQuit");
 	connect(quitAct, &QAction::triggered, qApp, &QCoreApplication::quit, Qt::QueuedConnection);
 }
@@ -149,13 +155,9 @@ void MainWindow::digitRelease() {
 	QString dspText = ui->calcEntry->text();
 
 	if (inputMode == false) {
-		if (curOper == OPERATION_NONE || curOper == OPERATION_ERROR) {
-			lastAns = 0;
-		}
+		if (curOper == OPERATION_NONE || curOper == OPERATION_ERROR) lastAns = 0;
 		ui->calcEntry->setText(button->text());
-		if (ui->calcEntry->text() != "0") {
-			inputMode = true;
-		}
+		if (ui->calcEntry->text() != "0") inputMode = true;
 	} else {
 		if (ui->calcEntry->text().length() < MAX_DISPLAY_NUM) {
 			QString curVal = dspText + button->text();
@@ -199,11 +201,8 @@ void MainWindow::operPress() {
 		double dspMem = dspText.toDouble();
 		calcAnswer(&curOper, dspMem, &lastAns);
 
-		if (curOper != OPERATION_ERROR) {
+		curOper == OPERATION_ERROR ? ui->calcEntry->setText("ERROR") : \
 			ui->calcEntry->setText(QString::number(lastAns, 'g', MAX_DISPLAY_NUM));
-		} else {
-			ui->calcEntry->setText("ERROR");
-		}
 	} else {
 		setNum = true;
 	}
@@ -225,11 +224,8 @@ void MainWindow::answerPress() {
 		double dspMem = dspText.toDouble();
 		calcAnswer(&curOper, dspMem, &lastAns);
 
-		if (curOper != OPERATION_ERROR) {
+		curOper == OPERATION_ERROR ? ui->calcEntry->setText("ERROR") : \
 			ui->calcEntry->setText(QString::number(lastAns, 'g', MAX_DISPLAY_NUM));
-		} else {
-			ui->calcEntry->setText("ERROR");
-		}
 
 		curOper = OPERATION_NONE;
 	}
@@ -289,9 +285,15 @@ void MainWindow::memoryPress() {
 
 void MainWindow::altPress() {
 	altMode = !altMode;
-	if (altMode) {
+	if (altMode == true) {
 		memAltBtn->setText("M-");
 	} else {
 		memAltBtn->setText("M+");
 	}
+}
+
+void MainWindow::setDspToConst() {
+	ConstButton *button = (ConstButton *)sender();
+	ui->calcEntry->setText(QString::number(button->storedConst(), 'g', MAX_DISPLAY_NUM));
+	inputMode = false;
 }

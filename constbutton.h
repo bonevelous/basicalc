@@ -1,4 +1,4 @@
-/********************************************************************************
+/*******************************************************************************
 
     Basicalc - Basic QT Calculator
     Copyright (C) 2023	Matthew Gobbi
@@ -16,42 +16,22 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-********************************************************************************/
+*******************************************************************************/
 
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef CONSTBUTTON_H
+#define CONSTBUTTON_H
 
-#include <QMainWindow>
-#include <QTextStream>
-#include <QDebug>
-#include <QAction>
-#include <QString>
+#include <QPushButton>
 
-QT_BEGIN_NAMESPACE
-namespace Ui { class MainWindow; }
-QT_END_NAMESPACE
-
-class MainWindow : public QMainWindow {
-
-	Q_OBJECT
-
+class ConstButton : public QPushButton {
 	public:
-		MainWindow(QWidget *parent = nullptr);
-		~MainWindow();
+		ConstButton(QWidget *parent = nullptr);
+		~ConstButton();
 
+		double storedConst();
+		void setConst(double _const);
 	private:
-		Ui::MainWindow *ui;
-
-	private slots:
-		void digitRelease();
-		void allClear();
-		void operPress();
-		void answerPress();
-		void deleteChar();
-		void addPoint();
-		void memoryPress();
-		void altPress();
-		void setDspToConst();
+		double m_storedConst = 0;
 };
 
-#endif //MAINWINDOW_H
+#endif //CONSTBUTTON_H

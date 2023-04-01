@@ -36,12 +36,14 @@ SOURCES += \
 	mainwindow.cpp \
 	funcbutton.cpp \
 	membutton.cpp \
+	constbutton.cpp \
 	calcfunctions.cpp
 
 HEADERS += \
 	mainwindow.h \
 	funcbutton.h \
 	membutton.h \
+	constbutton.h \
 	calcfunctions.h
 
 

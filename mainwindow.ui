@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>996</width>
-    <height>404</height>
+    <width>904</width>
+    <height>363</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -21,10 +21,69 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout_2">
-    <item row="2" column="4" rowspan="3">
+    <item row="2" column="1" colspan="2">
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <widget class="MemButton" name="buttonMC">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>MC</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="MemButton" name="buttonMS">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>MS</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="MemButton" name="buttonMR">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>MR</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="MemButton" name="buttonMAlt">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>M+</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="2" column="3" rowspan="2" colspan="2">
      <layout class="QGridLayout" name="gridLayout">
       <item row="2" column="0">
-       <widget class="QPushButton" name="buttonSIN">
+       <widget class="FuncButton" name="buttonSIN">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
           <horstretch>0</horstretch>
@@ -37,7 +96,7 @@
        </widget>
       </item>
       <item row="2" column="1">
-       <widget class="QPushButton" name="buttonCSC">
+       <widget class="FuncButton" name="buttonCSC">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
           <horstretch>0</horstretch>
@@ -50,7 +109,7 @@
        </widget>
       </item>
       <item row="1" column="1">
-       <widget class="QPushButton" name="buttonRoot">
+       <widget class="FuncButton" name="buttonRoot">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
           <horstretch>0</horstretch>
@@ -62,8 +121,21 @@
         </property>
        </widget>
       </item>
+      <item row="5" column="0">
+       <widget class="FuncButton" name="buttonLog">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>LOG</string>
+        </property>
+       </widget>
+      </item>
       <item row="4" column="0">
-       <widget class="QPushButton" name="buttonTAN">
+       <widget class="FuncButton" name="buttonTAN">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
           <horstretch>0</horstretch>
@@ -76,7 +148,7 @@
        </widget>
       </item>
       <item row="4" column="1">
-       <widget class="QPushButton" name="buttonCOT">
+       <widget class="FuncButton" name="buttonCOT">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
           <horstretch>0</horstretch>
@@ -89,7 +161,7 @@
        </widget>
       </item>
       <item row="0" column="0">
-       <widget class="QPushButton" name="buttonPi">
+       <widget class="ConstButton" name="buttonPi">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
           <horstretch>0</horstretch>
@@ -102,7 +174,7 @@
        </widget>
       </item>
       <item row="3" column="0">
-       <widget class="QPushButton" name="buttonCOS">
+       <widget class="FuncButton" name="buttonCOS">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
           <horstretch>0</horstretch>
@@ -115,7 +187,7 @@
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="QPushButton" name="buttonPower">
+       <widget class="FuncButton" name="buttonPower">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
           <horstretch>0</horstretch>
@@ -128,7 +200,7 @@
        </widget>
       </item>
       <item row="3" column="1">
-       <widget class="QPushButton" name="buttonSEC">
+       <widget class="FuncButton" name="buttonSEC">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
           <horstretch>0</horstretch>
@@ -140,34 +212,8 @@
         </property>
        </widget>
       </item>
-      <item row="1" column="0">
-       <widget class="QPushButton" name="buttonEuler">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>e</string>
-        </property>
-       </widget>
-      </item>
-      <item row="5" column="0">
-       <widget class="QPushButton" name="buttonLog">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>LOG</string>
-        </property>
-       </widget>
-      </item>
       <item row="5" column="1">
-       <widget class="QPushButton" name="buttonLN">
+       <widget class="FuncButton" name="buttonLN">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
           <horstretch>0</horstretch>
@@ -179,12 +225,8 @@
         </property>
        </widget>
       </item>
-     </layout>
-    </item>
-    <item row="2" column="0" rowspan="3">
-     <layout class="QVBoxLayout" name="verticalLayout">
-      <item>
-       <widget class="QPushButton" name="buttonBack">
+      <item row="1" column="0">
+       <widget class="ConstButton" name="buttonEuler">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
           <horstretch>0</horstretch>
@@ -192,52 +234,13 @@
          </sizepolicy>
         </property>
         <property name="text">
-         <string>←</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="buttonAllCls">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>AC</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="buttonClsEntry">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>CE</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="buttonAltMode">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>ALT</string>
+         <string>e</string>
         </property>
        </widget>
       </item>
      </layout>
     </item>
-    <item row="3" column="1" rowspan="2" colspan="3">
+    <item row="3" column="1" colspan="2">
      <layout class="QGridLayout" name="mainButtonGrid">
       <property name="sizeConstraint">
        <enum>QLayout::SetDefaultConstraint</enum>
@@ -509,10 +512,10 @@
       </item>
      </layout>
     </item>
-    <item row="2" column="1" colspan="3">
-     <layout class="QHBoxLayout" name="horizontalLayout_2">
+    <item row="2" column="0" rowspan="2">
+     <layout class="QVBoxLayout" name="verticalLayout">
       <item>
-       <widget class="MemButton" name="buttonMC">
+       <widget class="QPushButton" name="buttonBack">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
           <horstretch>0</horstretch>
@@ -520,12 +523,12 @@
          </sizepolicy>
         </property>
         <property name="text">
-         <string>MC</string>
+         <string>←</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="MemButton" name="buttonMS">
+       <widget class="QPushButton" name="buttonAllCls">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
           <horstretch>0</horstretch>
@@ -533,15 +536,12 @@
          </sizepolicy>
         </property>
         <property name="text">
-         <string>MS</string>
+         <string>AC</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="MemButton" name="buttonMR">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
+       <widget class="ConstButton" name="buttonClsEntry">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
           <horstretch>0</horstretch>
@@ -549,12 +549,12 @@
          </sizepolicy>
         </property>
         <property name="text">
-         <string>MR</string>
+         <string>CE</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="MemButton" name="buttonMAlt">
+       <widget class="QPushButton" name="buttonAltMode">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
           <horstretch>0</horstretch>
@@ -562,7 +562,7 @@
          </sizepolicy>
         </property>
         <property name="text">
-         <string>M+</string>
+         <string>ALT</string>
         </property>
        </widget>
       </item>
@@ -600,7 +600,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>996</width>
+     <width>904</width>
      <height>30</height>
     </rect>
    </property>
@@ -674,6 +674,11 @@
    <class>MemButton</class>
    <extends>QPushButton</extends>
    <header>membutton.h</header>
+  </customwidget>
+  <customwidget>
+   <class>ConstButton</class>
+   <extends>QPushButton</extends>
+   <header>constbutton.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
