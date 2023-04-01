@@ -55,7 +55,7 @@ FuncButton *addButton;
 FuncButton *subButton;
 FuncButton *mulButton;
 FuncButton *divButton;
-FuncButton *powButton;
+FuncButton *squareButton;
 FuncButton *sqrtButton;
 FuncButton *modButton;
 
@@ -96,13 +96,13 @@ MainWindow::MainWindow(QWidget *parent) :
 	divButton->setFunction(OPERATION_DIVIDE);
 	connect(divButton, &FuncButton::released, this, &MainWindow::operPress);
 
-	mulButton = MainWindow::findChild<FuncButton *>("buttonPower");
-	mulButton->setFunction(OPERATION_POWER);
-	connect(mulButton, &FuncButton::released, this, &MainWindow::operPress);
+	squareButton = MainWindow::findChild<FuncButton *>("buttonSquare");
+	squareButton->setFunction(OPERATION_POWER);
+	connect(squareButton, &FuncButton::released, this, &MainWindow::operPress);
 
-	divButton = MainWindow::findChild<FuncButton *>("buttonSquareRoot");
-	divButton->setFunction(OPERATION_SQUARE_ROOT);
-	connect(divButton, &FuncButton::released, this, &MainWindow::operPress);
+	sqrtButton = MainWindow::findChild<FuncButton *>("buttonSquareRoot");
+	sqrtButton->setFunction(OPERATION_SQUARE_ROOT);
+	connect(sqrtButton, &FuncButton::released, this, &MainWindow::operPress);
 
 	modButton = MainWindow::findChild<FuncButton *>("buttonModulus");
 	modButton->setFunction(OPERATION_MODULUS);
