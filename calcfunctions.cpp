@@ -19,12 +19,17 @@
 *******************************************************************************/
 
 #include "calcfunctions.h"
-//#include <complex>
 
 bool calcInstaAns(operEnum _enum) {
 	bool _answer = false;
 	switch(_enum) {
 		case OPERATION_SIGN_SWAP:
+			_answer = true;
+			break;
+		case OPERATION_FACTORIAL:
+			_answer = true;
+			break;
+		case OPERATION_ABSOLUTE:
 			_answer = true;
 			break;
 		default:
@@ -57,7 +62,7 @@ void calcAnswer(operEnum *_enum, double gMem, double *oldAns) {
 			break;
 		case OPERATION_ROOT:
 			if (gMem >= 0) {
-				*oldAns = pow(*oldAns, (1 / gMem));
+				*oldAns = pow(gMem, (1.0 / *oldAns));
 			} else {
 				*_enum = OPERATION_ERROR;
 				*oldAns = 0;
@@ -68,6 +73,19 @@ void calcAnswer(operEnum *_enum, double gMem, double *oldAns) {
 			break;
 		case OPERATION_SIGN_SWAP:
 			*oldAns = -gMem;
+			break;
+		case OPERATION_FACTORIAL:
+			{
+				int gMemInt = (int) gMem;
+				int curAns = gMemInt;
+				for (int i = curAns - 1; i > 0; i--) {
+					curAns *= i;
+				}
+				*oldAns = (double) curAns;
+			}
+			break;
+		case OPERATION_ABSOLUTE:
+			*oldAns = abs(gMem);
 			break;
 		default:
 			break;

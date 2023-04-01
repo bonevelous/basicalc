@@ -165,6 +165,14 @@ MainWindow::MainWindow(QWidget *parent) :
 	eulerButton->setConst(exp(1));
 	connect(eulerButton, &ConstButton::released, this, &MainWindow::setDspToConst);
 
+	factButton = MainWindow::findChild<FuncButton *>("buttonFactorial");
+	factButton->setFunction(OPERATION_FACTORIAL);
+	connect(factButton, &FuncButton::released, this, &MainWindow::operPress);
+
+	absButton = MainWindow::findChild<FuncButton *>("buttonAbsolute");
+	absButton->setFunction(OPERATION_ABSOLUTE);
+	connect(absButton, &FuncButton::released, this, &MainWindow::operPress);
+
 	quitAct = MainWindow::findChild<QAction *>("actionQuit");
 	connect(quitAct, &QAction::triggered, qApp, &QCoreApplication::quit, Qt::QueuedConnection);
 }
@@ -216,10 +224,9 @@ void MainWindow::operPress() {
 	curOper = button->function();
 	lastAns = dspText.toDouble();
 
-	if (lastAns != 0 && setNum != true) setNum = calcInstaAns(curOper);
-	inputMode = false;
+	if (curOper != OPERATION_SIGN_SWAP) inputMode = false;
 
-	if (setNum == true) {
+	if (setNum == true || calcInstaAns(curOper) == true) {
 		QString dspText = ui->calcEntry->text();
 		double dspMem = dspText.toDouble();
 		calcAnswer(&curOper, dspMem, &lastAns);
