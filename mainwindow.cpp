@@ -55,8 +55,8 @@ FuncButton *addButton;
 FuncButton *subButton;
 FuncButton *mulButton;
 FuncButton *divButton;
-//FuncButton *powButton;
-//FuncButton *sqrtButton;
+FuncButton *powButton;
+FuncButton *sqrtButton;
 FuncButton *modButton;
 
 QAction *quitAct;
@@ -94,6 +94,14 @@ MainWindow::MainWindow(QWidget *parent) :
 
 	divButton = MainWindow::findChild<FuncButton *>("buttonDivide");
 	divButton->setFunction(OPERATION_DIVIDE);
+	connect(divButton, &FuncButton::released, this, &MainWindow::operPress);
+
+	mulButton = MainWindow::findChild<FuncButton *>("buttonPower");
+	mulButton->setFunction(OPERATION_POWER);
+	connect(mulButton, &FuncButton::released, this, &MainWindow::operPress);
+
+	divButton = MainWindow::findChild<FuncButton *>("buttonSquareRoot");
+	divButton->setFunction(OPERATION_SQUARE_ROOT);
 	connect(divButton, &FuncButton::released, this, &MainWindow::operPress);
 
 	modButton = MainWindow::findChild<FuncButton *>("buttonModulus");
@@ -175,44 +183,6 @@ void MainWindow::addPoint() {
 	}
 }
 
-void calcAnswer(double gMem, double *gAns) {
-	switch (curOper) {
-		case OPERATION_ADD:
-			*gAns = lastAns + gMem;
-			lastAns = *gAns;
-			break;
-		case OPERATION_SUBTRACT:
-			*gAns = lastAns - gMem;
-			lastAns = *gAns;
-			break;
-		case OPERATION_MULTIPLY:
-			*gAns = lastAns * gMem;
-			lastAns = *gAns;
-			break;
-		case OPERATION_DIVIDE:
-			if (gMem != 0) {
-				*gAns = lastAns / gMem;
-				lastAns = *gAns;
-			} else {
-				curOper = OPERATION_ERROR;
-				lastAns = 0;
-			}
-			break;
-		case OPERATION_MODULUS:
-			*gAns = round(fmod(lastAns, gMem));
-			lastAns = *gAns;
-			break;
-		case OPERATION_SIGN_SWAP:
-			*gAns = -gMem;
-			lastAns = *gAns;
-			break;
-		default:
-			break;
-	}
-
-	inputMode = false;
-}
-
 void MainWindow::operPress() {
 	QTextStream out(stdout);
 
@@ -221,18 +191,16 @@ void MainWindow::operPress() {
 	curOper = button->function();
 	lastAns = dspText.toDouble();
 
-	if (curOper == OPERATION_SIGN_SWAP && lastAns != 0) setNum = true;
-
+	if (lastAns != 0 && setNum != true) setNum = calcInstaAns(curOper);
 	inputMode = false;
 
 	if (setNum == true) {
 		QString dspText = ui->calcEntry->text();
 		double dspMem = dspText.toDouble();
-		double calcAns = 0;
-		calcAnswer(dspMem, &calcAns);
+		calcAnswer(&curOper, dspMem, &lastAns);
 
 		if (curOper != OPERATION_ERROR) {
-			ui->calcEntry->setText(QString::number(calcAns, 'g', MAX_DISPLAY_NUM));
+			ui->calcEntry->setText(QString::number(lastAns, 'g', MAX_DISPLAY_NUM));
 		} else {
 			ui->calcEntry->setText("ERROR");
 		}
@@ -255,12 +223,10 @@ void MainWindow::answerPress() {
 
 		QString dspText = ui->calcEntry->text();
 		double dspMem = dspText.toDouble();
-		double calcAns = 0;
-
-		calcAnswer(dspMem, &calcAns);
+		calcAnswer(&curOper, dspMem, &lastAns);
 
 		if (curOper != OPERATION_ERROR) {
-			ui->calcEntry->setText(QString::number(calcAns, 'g', MAX_DISPLAY_NUM));
+			ui->calcEntry->setText(QString::number(lastAns, 'g', MAX_DISPLAY_NUM));
 		} else {
 			ui->calcEntry->setText("ERROR");
 		}

@@ -35,12 +35,15 @@ SOURCES += \
 	main.cpp \
 	mainwindow.cpp \
 	funcbutton.cpp \
-	membutton.cpp
+	membutton.cpp \
+	calcfunctions.cpp
 
 HEADERS += \
 	mainwindow.h \
 	funcbutton.h \
-	membutton.h
+	membutton.h \
+	calcfunctions.h
+
 
 FORMS += \
 	mainwindow.ui

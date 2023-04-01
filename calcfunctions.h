@@ -21,8 +21,10 @@
 #ifndef CALCFUNCTIONS_H
 #define CALCFUNCTIONS_H
 
+#include "enums.h"
 #include <cmath>
 
-void calcAnswer(double gMem, double *gAns);
+bool calcInstaAns(operEnum _enum);
+void calcAnswer(operEnum *_enum, double gMem, double *oldAns);
 
 #endif //CALCFUNCTIONS_H
