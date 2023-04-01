@@ -222,11 +222,13 @@ void MainWindow::operPress() {
 	FuncButton *button = (FuncButton *)sender();
 	QString dspText = ui->calcEntry->text();
 	curOper = button->function();
-	lastAns = dspText.toDouble();
 
+	if (curOper == OPERATION_NONE || curOper == OPERATION_ERROR) lastAns = dspText.toDouble();
 	if (curOper != OPERATION_SIGN_SWAP) inputMode = false;
 
 	if (setNum == true || calcInstaAns(curOper) == true) {
+		inputMode = false;
+
 		QString dspText = ui->calcEntry->text();
 		double dspMem = dspText.toDouble();
 		calcAnswer(&curOper, dspMem, &lastAns);
