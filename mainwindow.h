@@ -50,6 +50,7 @@ class MainWindow : public QMainWindow {
 		void deleteChar();
 		void addPoint();
 		void memoryPress();
+		void altPress();
 };
 
 #endif //MAINWINDOW_H

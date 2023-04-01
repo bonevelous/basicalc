@@ -39,8 +39,7 @@ typedef enum memBtnEnum {
 	MEMORY_STORE,
 	MEMORY_CLEAR,
 	MEMORY_RECALL,
-	MEMORY_ADD,
-	MEMORY_SUBTRACT
+	MEMORY_ALT
 } memBtnEnum;
 
 #endif //ENUMS_H

@@ -33,22 +33,22 @@ operEnum curOper = OPERATION_NONE;
 
 bool inputMode = false;
 bool setNum = false;
+bool altMode = false;
 
 double calcMem = 0.0;
 double lastAns = 0.0;
 
 QPushButton *calcDigit[10];
 QPushButton *ansButton;
-
 QPushButton *allClearButton;
 QPushButton *delButton;
 QPushButton *dotButton;
+QPushButton *altButton;
 
 MemButton *memSavBtn;
 MemButton *memClsBtn;
 MemButton *memRecBtn;
-MemButton *memAddBtn;
-MemButton *memSubBtn;
+MemButton *memAltBtn;
 
 FuncButton *swapButton;
 FuncButton *addButton;
@@ -109,7 +109,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	delButton = MainWindow::findChild<QPushButton *>("buttonBack");
 	connect(delButton, &QPushButton::released, this, &MainWindow::deleteChar);
 
-	/*memSavBtn = MainWindow::findChild<MemButton *>("buttonMS");
+	memSavBtn = MainWindow::findChild<MemButton *>("buttonMS");
 	memSavBtn->setMemFunc(MEMORY_STORE);
 	connect(memSavBtn, &MemButton::released, this, &MainWindow::memoryPress);
 
@@ -121,13 +121,12 @@ MainWindow::MainWindow(QWidget *parent) :
 	memRecBtn->setMemFunc(MEMORY_RECALL);
 	connect(memRecBtn, &MemButton::released, this, &MainWindow::memoryPress);
 
-	memAddBtn = MainWindow::findChild<MemButton *>("buttonMAdd");
-	memAddBtn->setMemFunc(MEMORY_ADD);
-	connect(memAddBtn, &MemButton::released, this, &MainWindow::memoryPress);
+	memAltBtn = MainWindow::findChild<MemButton *>("buttonMAlt");
+	memAltBtn->setMemFunc(MEMORY_ALT);
+	connect(memAltBtn, &MemButton::released, this, &MainWindow::memoryPress);
 
-	memSubBtn = MainWindow::findChild<MemButton *>("buttonMSub");
-	memSubBtn->setMemFunc(MEMORY_SUBTRACT);
-	connect(memSubBtn, &MemButton::released, this, &MainWindow::memoryPress);*/
+	altButton = MainWindow::findChild<QPushButton *>("buttonAltMode");
+	connect(altButton, &QPushButton::released, this, &MainWindow::altPress);
 
 	quitAct = MainWindow::findChild<QAction *>("actionQuit");
 	connect(quitAct, &QAction::triggered, qApp, &QCoreApplication::quit, Qt::QueuedConnection);
@@ -222,7 +221,7 @@ void MainWindow::operPress() {
 	curOper = button->function();
 	lastAns = dspText.toDouble();
 
-	if (curOper == OPERATION_SIGN_SWAP) setNum = true;
+	if (curOper == OPERATION_SIGN_SWAP && lastAns != 0) setNum = true;
 
 	inputMode = false;
 
@@ -299,24 +298,34 @@ void MainWindow::memoryPress() {
 		case MEMORY_RECALL:
 			dspMem = calcMem;
 			ui->calcEntry->setText(QString::number(dspMem, 'g', MAX_DISPLAY_NUM));
+			inputMode = false;
 			break;
-		case MEMORY_ADD:
+		case MEMORY_ALT:
 			if (memRecBtn->isEnabled() == false) {
-				calcMem = dspMem;
+				if (altMode) {
+					calcMem = -dspMem;
+				} else {
+					calcMem = dspMem;
+				}
 				memRecBtn->setEnabled(true);
 			} else {
-				calcMem += dspMem;
-			}
-			break;
-		case MEMORY_SUBTRACT:
-			if (memRecBtn->isEnabled() == false) {
-				calcMem = -dspMem;
-				memRecBtn->setEnabled(true);
-			} else {
-				calcMem -= dspMem;
+				if (altMode) {
+					calcMem -= dspMem;
+				} else {
+					calcMem += dspMem;
+				}
 			}
 			break;
 		default:
 			break;
+	}
+}
+
+void MainWindow::altPress() {
+	altMode = !altMode;
+	if (altMode) {
+		memAltBtn->setText("M-");
+	} else {
+		memAltBtn->setText("M+");
 	}
 }
