@@ -25,6 +25,6 @@
 #include <cmath>
 
 bool calcInstaAns(operEnum _enum);
-void calcAnswer(operEnum *_enum, double gMem, double *oldAns);
+void calcAnswer(operEnum *_enum, double gMem, double *oldAns, bool _altMode);
 
 #endif //CALCFUNCTIONS_H

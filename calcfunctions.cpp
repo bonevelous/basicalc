@@ -32,13 +32,31 @@ bool calcInstaAns(operEnum _enum) {
 		case OPERATION_ABSOLUTE:
 			_answer = true;
 			break;
+		case OPERATION_SIN:
+			_answer = true;
+			break;
+		case OPERATION_COS:
+			_answer = true;
+			break;
+		case OPERATION_TAN:
+			_answer = true;
+			break;
+		case OPERATION_CSC:
+			_answer = true;
+			break;
+		case OPERATION_SEC:
+			_answer = true;
+			break;
+		case OPERATION_COT:
+			_answer = true;
+			break;
 		default:
 			break;
 	}
 	return _answer;
 }
 
-void calcAnswer(operEnum *_enum, double gMem, double *oldAns) {
+void calcAnswer(operEnum *_enum, double gMem, double *oldAns, bool _altMode) {
 	switch (*_enum) {
 		case OPERATION_ADD:
 			*oldAns += gMem;
@@ -86,6 +104,24 @@ void calcAnswer(operEnum *_enum, double gMem, double *oldAns) {
 			break;
 		case OPERATION_ABSOLUTE:
 			*oldAns = abs(gMem);
+			break;
+		case OPERATION_SIN:
+			_altMode == true ? *oldAns = asin(gMem) : *oldAns = sin(gMem);
+			break;
+		case OPERATION_COS:
+			_altMode == true ? *oldAns = acos(gMem) : *oldAns = cos(gMem);
+			break;
+		case OPERATION_TAN:
+			_altMode == true ? *oldAns = atan(gMem) : *oldAns = tan(gMem);
+			break;
+		case OPERATION_CSC:
+			_altMode == true ? *oldAns = (1 / asin(gMem)) : *oldAns = (1 / sin(gMem));
+			break;
+		case OPERATION_SEC:
+			_altMode == true ? *oldAns = (1 / acos(gMem)) : *oldAns = (1 / cos(gMem));
+			break;
+		case OPERATION_COT:
+			_altMode == true ? *oldAns = (1 / atan(gMem)) : *oldAns = (1 / tan(gMem));
 			break;
 		default:
 			break;

@@ -173,6 +173,30 @@ MainWindow::MainWindow(QWidget *parent) :
 	absButton->setFunction(OPERATION_ABSOLUTE);
 	connect(absButton, &FuncButton::released, this, &MainWindow::operPress);
 
+	sinButton = MainWindow::findChild<FuncButton *>("buttonSIN");
+	sinButton->setFunction(OPERATION_SIN);
+	connect(sinButton, &FuncButton::released, this, &MainWindow::operPress);
+
+	cosButton = MainWindow::findChild<FuncButton *>("buttonCOS");
+	cosButton->setFunction(OPERATION_COS);
+	connect(cosButton, &FuncButton::released, this, &MainWindow::operPress);
+
+	tanButton = MainWindow::findChild<FuncButton *>("buttonTAN");
+	tanButton->setFunction(OPERATION_TAN);
+	connect(tanButton, &FuncButton::released, this, &MainWindow::operPress);
+
+	cscButton = MainWindow::findChild<FuncButton *>("buttonCSC");
+	cscButton->setFunction(OPERATION_CSC);
+	connect(cscButton, &FuncButton::released, this, &MainWindow::operPress);
+
+	secButton = MainWindow::findChild<FuncButton *>("buttonSEC");
+	secButton->setFunction(OPERATION_SEC);
+	connect(secButton, &FuncButton::released, this, &MainWindow::operPress);
+
+	cotButton = MainWindow::findChild<FuncButton *>("buttonCOT");
+	cotButton->setFunction(OPERATION_COT);
+	connect(cotButton, &FuncButton::released, this, &MainWindow::operPress);
+
 	quitAct = MainWindow::findChild<QAction *>("actionQuit");
 	connect(quitAct, &QAction::triggered, qApp, &QCoreApplication::quit, Qt::QueuedConnection);
 }
@@ -231,7 +255,7 @@ void MainWindow::operPress() {
 
 		QString dspText = ui->calcEntry->text();
 		double dspMem = dspText.toDouble();
-		calcAnswer(&curOper, dspMem, &lastAns);
+		calcAnswer(&curOper, dspMem, &lastAns, altMode);
 
 		curOper == OPERATION_ERROR ? ui->calcEntry->setText("ERROR") : \
 			ui->calcEntry->setText(QString::number(lastAns, 'g', MAX_DISPLAY_NUM));
@@ -254,7 +278,7 @@ void MainWindow::answerPress() {
 
 		QString dspText = ui->calcEntry->text();
 		double dspMem = dspText.toDouble();
-		calcAnswer(&curOper, dspMem, &lastAns);
+		calcAnswer(&curOper, dspMem, &lastAns, altMode);
 
 		curOper == OPERATION_ERROR ? ui->calcEntry->setText("ERROR") : \
 			ui->calcEntry->setText(QString::number(lastAns, 'g', MAX_DISPLAY_NUM));
@@ -319,13 +343,26 @@ void MainWindow::altPress() {
 	altMode = !altMode;
 	if (altMode == true) {
 		memAltBtn->setText("M-");
+		sinButton->setText("ASIN");
+		sinButton->setText("ACOS");
+		sinButton->setText("ATAN");
+		sinButton->setText("ACSC");
+		sinButton->setText("ASEC");
+		sinButton->setText("ACOT");
 	} else {
 		memAltBtn->setText("M+");
+		sinButton->setText("SIN");
+		sinButton->setText("COS");
+		sinButton->setText("TAN");
+		sinButton->setText("CSC");
+		sinButton->setText("SEC");
+		sinButton->setText("COT");
 	}
 }
 
 void MainWindow::setDspToConst() {
 	ConstButton *button = (ConstButton *)sender();
 	ui->calcEntry->setText(QString::number(button->storedConst(), 'g', MAX_DISPLAY_NUM));
+	lastAns = button->storedConst();
 	inputMode = false;
 }
