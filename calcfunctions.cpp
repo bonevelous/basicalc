@@ -50,6 +50,12 @@ bool calcInstaAns(operEnum _enum) {
 		case OPERATION_COT:
 			_answer = true;
 			break;
+		case OPERATION_LOG:
+			_answer = true;
+			break;
+		case OPERATION_LN:
+			_answer = true;
+			break;
 		default:
 			break;
 	}
@@ -122,6 +128,12 @@ void calcAnswer(operEnum *_enum, double gMem, double *oldAns, bool _altMode) {
 			break;
 		case OPERATION_COT:
 			_altMode == true ? *oldAns = (1 / atan(gMem)) : *oldAns = (1 / tan(gMem));
+			break;
+		case OPERATION_LOG:
+			*oldAns = log10(gMem);
+			break;
+		case OPERATION_LN:
+			*oldAns = log(gMem);
 			break;
 		default:
 			break;

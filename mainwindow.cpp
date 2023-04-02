@@ -197,6 +197,14 @@ MainWindow::MainWindow(QWidget *parent) :
 	cotButton->setFunction(OPERATION_COT);
 	connect(cotButton, &FuncButton::released, this, &MainWindow::operPress);
 
+	logButton = MainWindow::findChild<FuncButton *>("buttonLog");
+	logButton->setFunction(OPERATION_LOG);
+	connect(logButton, &FuncButton::released, this, &MainWindow::operPress);
+
+	lnButton = MainWindow::findChild<FuncButton *>("buttonLN");
+	lnButton->setFunction(OPERATION_LN);
+	connect(lnButton, &FuncButton::released, this, &MainWindow::operPress);
+
 	quitAct = MainWindow::findChild<QAction *>("actionQuit");
 	connect(quitAct, &QAction::triggered, qApp, &QCoreApplication::quit, Qt::QueuedConnection);
 }
