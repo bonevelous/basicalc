@@ -78,6 +78,7 @@ ConstButton *piButton;
 ConstButton *eulerButton;
 
 QAction *quitAct;
+QKeyEvent *keyEvent;
 
 MainWindow::MainWindow(QWidget *parent) : 
 	QMainWindow (parent), ui(new Ui::MainWindow) {
@@ -225,8 +226,6 @@ void MainWindow::digitRelease() {
 		if (ui->calcEntry->text().length() < MAX_DISPLAY_NUM) {
 			QString curVal = dspText + button->text();
 			ui->calcEntry->setText(curVal);
-		} else {
-			qDebug() << "Max display numbers reached";
 		}
 	}
 }
@@ -242,8 +241,6 @@ void MainWindow::addPoint() {
 		if (!ui->calcEntry->text().contains('.')) {
 			QString curVal = dspText + button->text();
 			ui->calcEntry->setText(curVal);
-		} else {
-			qDebug() << "Cannot set fractional, already fractional";
 		}
 	}
 }
@@ -302,7 +299,6 @@ void MainWindow::deleteChar() {
 	} else {
 		dspText = "0";
 	}
-
 	ui->calcEntry->setText(dspText);
 }
 
@@ -328,18 +324,10 @@ void MainWindow::memoryPress() {
 			break;
 		case MEMORY_ALT:
 			if (memRecBtn->isEnabled() == false) {
-				if (altMode) {
-					calcMem = -dspMem;
-				} else {
-					calcMem = dspMem;
-				}
+				altMode == true ? calcMem = -dspMem : calcMem = dspMem;
 				memRecBtn->setEnabled(true);
 			} else {
-				if (altMode) {
-					calcMem -= dspMem;
-				} else {
-					calcMem += dspMem;
-				}
+				altMode == true ? calcMem -= dspMem : calcMem += dspMem;
 			}
 			break;
 		default:
@@ -373,4 +361,170 @@ void MainWindow::setDspToConst() {
 	ui->calcEntry->setText(QString::number(button->storedConst(), 'g', MAX_DISPLAY_NUM));
 	lastAns = button->storedConst();
 	inputMode = false;
+}
+
+void MainWindow::keyPressEvent(QKeyEvent *event) {
+	switch (event->key()) {
+		case Qt::Key_0:
+			{
+				QString dspText = ui->calcEntry->text();
+
+				if (inputMode == false) {
+					if (curOper == OPERATION_NONE || curOper == OPERATION_ERROR) lastAns = 0;
+					ui->calcEntry->setText("0");
+				} else {
+					if (ui->calcEntry->text().length() < MAX_DISPLAY_NUM) {
+						QString curVal = dspText + "1";
+						ui->calcEntry->setText(curVal);
+					}
+				}
+				break;
+			}
+		case Qt::Key_1:
+			{
+				QString dspText = ui->calcEntry->text();
+
+				if (inputMode == false) {
+					if (curOper == OPERATION_NONE || curOper == OPERATION_ERROR) lastAns = 0;
+					ui->calcEntry->setText("1");
+					inputMode = true;
+				} else {
+					if (ui->calcEntry->text().length() < MAX_DISPLAY_NUM) {
+						QString curVal = dspText + "1";
+						ui->calcEntry->setText(curVal);
+					}
+				}
+				break;
+			}
+		case Qt::Key_2:
+			{
+				QString dspText = ui->calcEntry->text();
+
+				if (inputMode == false) {
+					if (curOper == OPERATION_NONE || curOper == OPERATION_ERROR) lastAns = 0;
+					ui->calcEntry->setText("2");
+					inputMode = true;
+				} else {
+					if (ui->calcEntry->text().length() < MAX_DISPLAY_NUM) {
+						QString curVal = dspText + "2";
+						ui->calcEntry->setText(curVal);
+					}
+				}
+				break;
+			}
+		case Qt::Key_3:
+			{
+				QString dspText = ui->calcEntry->text();
+
+				if (inputMode == false) {
+					if (curOper == OPERATION_NONE || curOper == OPERATION_ERROR) lastAns = 0;
+					ui->calcEntry->setText("3");
+					inputMode = true;
+				} else {
+					if (ui->calcEntry->text().length() < MAX_DISPLAY_NUM) {
+						QString curVal = dspText + "3";
+						ui->calcEntry->setText(curVal);
+					}
+				}
+				break;
+			}
+		case Qt::Key_4:
+			{
+				QString dspText = ui->calcEntry->text();
+
+				if (inputMode == false) {
+					if (curOper == OPERATION_NONE || curOper == OPERATION_ERROR) lastAns = 0;
+					ui->calcEntry->setText("4");
+					inputMode = true;
+				} else {
+					if (ui->calcEntry->text().length() < MAX_DISPLAY_NUM) {
+						QString curVal = dspText + "4";
+						ui->calcEntry->setText(curVal);
+					}
+				}
+				break;
+			}
+		case Qt::Key_5:
+			{
+				QString dspText = ui->calcEntry->text();
+
+				if (inputMode == false) {
+					if (curOper == OPERATION_NONE || curOper == OPERATION_ERROR) lastAns = 0;
+					ui->calcEntry->setText("5");
+					inputMode = true;
+				} else {
+					if (ui->calcEntry->text().length() < MAX_DISPLAY_NUM) {
+						QString curVal = dspText + "5";
+						ui->calcEntry->setText(curVal);
+					}
+				}
+				break;
+			}
+		case Qt::Key_6:
+			{
+				QString dspText = ui->calcEntry->text();
+
+				if (inputMode == false) {
+					if (curOper == OPERATION_NONE || curOper == OPERATION_ERROR) lastAns = 0;
+					ui->calcEntry->setText("6");
+					inputMode = true;
+				} else {
+					if (ui->calcEntry->text().length() < MAX_DISPLAY_NUM) {
+						QString curVal = dspText + "6";
+						ui->calcEntry->setText(curVal);
+					}
+				}
+				break;
+			}
+		case Qt::Key_7:
+			{
+				QString dspText = ui->calcEntry->text();
+
+				if (inputMode == false) {
+					if (curOper == OPERATION_NONE || curOper == OPERATION_ERROR) lastAns = 0;
+					ui->calcEntry->setText("7");
+					inputMode = true;
+				} else {
+					if (ui->calcEntry->text().length() < MAX_DISPLAY_NUM) {
+						QString curVal = dspText + "7";
+						ui->calcEntry->setText(curVal);
+					}
+				}
+				break;
+			}
+		case Qt::Key_8:
+			{
+				QString dspText = ui->calcEntry->text();
+
+				if (inputMode == false) {
+					if (curOper == OPERATION_NONE || curOper == OPERATION_ERROR) lastAns = 0;
+					ui->calcEntry->setText("8");
+					inputMode = true;
+				} else {
+					if (ui->calcEntry->text().length() < MAX_DISPLAY_NUM) {
+						QString curVal = dspText + "8";
+						ui->calcEntry->setText(curVal);
+					}
+				}
+				break;
+			}
+		case Qt::Key_9:
+			{
+				QString dspText = ui->calcEntry->text();
+
+				if (inputMode == false) {
+					if (curOper == OPERATION_NONE || curOper == OPERATION_ERROR) lastAns = 0;
+					ui->calcEntry->setText("9");
+					inputMode = true;
+				} else {
+					if (ui->calcEntry->text().length() < MAX_DISPLAY_NUM) {
+						QString curVal = dspText + "9";
+						ui->calcEntry->setText(curVal);
+					}
+				}
+				break;
+			}
+		default:
+			break;
+	}
 }

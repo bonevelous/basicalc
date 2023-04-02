@@ -24,6 +24,7 @@
 #include <QMainWindow>
 #include <QTextStream>
 #include <QDebug>
+#include <QKeyEvent>
 #include <QAction>
 #include <QString>
 
@@ -52,6 +53,7 @@ class MainWindow : public QMainWindow {
 		void memoryPress();
 		void altPress();
 		void setDspToConst();
+		void keyPressEvent(QKeyEvent *event);
 };
 
 #endif //MAINWINDOW_H
