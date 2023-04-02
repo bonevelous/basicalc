@@ -246,17 +246,18 @@ void MainWindow::addPoint() {
 }
 
 void MainWindow::operPress() {
-	QTextStream out(stdout);
-
 	FuncButton *button = (FuncButton *)sender();
 	QString dspText = ui->calcEntry->text();
-	curOper = button->function();
 
 	if (curOper == OPERATION_NONE || curOper == OPERATION_ERROR) lastAns = dspText.toDouble();
+
+	curOper = button->function();
+
 	if (curOper != OPERATION_SIGN_SWAP) inputMode = false;
 
 	if (setNum == true || calcInstaAns(curOper) == true) {
 		inputMode = false;
+		setNum = true;
 
 		QString dspText = ui->calcEntry->text();
 		double dspMem = dspText.toDouble();
@@ -521,6 +522,204 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
 						QString curVal = dspText + "9";
 						ui->calcEntry->setText(curVal);
 					}
+				}
+				break;
+			}
+		case Qt::Key_Backspace:
+			{
+				QString dspText = ui->calcEntry->text();
+				if (dspText.length() > 1) {
+					dspText.chop(1);
+				} else {
+					dspText = "0";
+				}
+				ui->calcEntry->setText(dspText);
+				break;
+			}
+		case Qt::Key_Delete:
+			{
+				setNum = false;
+				inputMode = false;
+				curOper = OPERATION_NONE;
+				ui->calcEntry->setText("0");
+				break;
+			}
+		case Qt::Key_Plus:
+			{
+				QString dspText = ui->calcEntry->text();
+
+				if (curOper == OPERATION_NONE || curOper == OPERATION_ERROR) \
+					lastAns = dspText.toDouble();
+
+				curOper = OPERATION_ADD;
+
+				inputMode = false;
+				if (setNum == true || calcInstaAns(curOper) == true) {
+					setNum = true;
+
+					QString dspText = ui->calcEntry->text();
+					double dspMem = dspText.toDouble();
+					calcAnswer(&curOper, dspMem, &lastAns, altMode);
+
+					curOper == OPERATION_ERROR ? ui->calcEntry->setText("ERROR") : \
+						ui->calcEntry->setText(QString::number(lastAns, 'g', \
+						MAX_DISPLAY_NUM));
+				} else {
+					setNum = true;
+				}
+				break;
+			}
+		case Qt::Key_Minus:
+			{
+				QString dspText = ui->calcEntry->text();
+
+				if (curOper == OPERATION_NONE || curOper == OPERATION_ERROR) \
+					lastAns = dspText.toDouble();
+
+				curOper = OPERATION_SUBTRACT;
+
+				inputMode = false;
+				if (setNum == true || calcInstaAns(curOper) == true) {
+					setNum = true;
+
+					QString dspText = ui->calcEntry->text();
+					double dspMem = dspText.toDouble();
+					calcAnswer(&curOper, dspMem, &lastAns, altMode);
+
+					curOper == OPERATION_ERROR ? ui->calcEntry->setText("ERROR") : \
+						ui->calcEntry->setText(QString::number(lastAns, 'g', \
+						MAX_DISPLAY_NUM));
+				} else {
+					setNum = true;
+				}
+				break;
+			}
+		case Qt::Key_Asterisk:
+			{
+				QString dspText = ui->calcEntry->text();
+
+				if (curOper == OPERATION_NONE || curOper == OPERATION_ERROR) \
+					lastAns = dspText.toDouble();
+
+				curOper = OPERATION_MULTIPLY;
+
+				inputMode = false;
+				if (setNum == true || calcInstaAns(curOper) == true) {
+					setNum = true;
+
+					QString dspText = ui->calcEntry->text();
+					double dspMem = dspText.toDouble();
+					calcAnswer(&curOper, dspMem, &lastAns, altMode);
+
+					curOper == OPERATION_ERROR ? ui->calcEntry->setText("ERROR") : \
+						ui->calcEntry->setText(QString::number(lastAns, 'g', \
+						MAX_DISPLAY_NUM));
+				} else {
+					setNum = true;
+				}
+				break;
+			}
+		case Qt::Key_Slash:
+			{
+				QString dspText = ui->calcEntry->text();
+
+				if (curOper == OPERATION_NONE || curOper == OPERATION_ERROR) \
+					lastAns = dspText.toDouble();
+
+				curOper = OPERATION_DIVIDE;
+
+				inputMode = false;
+				if (setNum == true || calcInstaAns(curOper) == true) {
+					setNum = true;
+
+					QString dspText = ui->calcEntry->text();
+					double dspMem = dspText.toDouble();
+					calcAnswer(&curOper, dspMem, &lastAns, altMode);
+
+					curOper == OPERATION_ERROR ? ui->calcEntry->setText("ERROR") : \
+						ui->calcEntry->setText(QString::number(lastAns, 'g', \
+						MAX_DISPLAY_NUM));
+				} else {
+					setNum = true;
+				}
+				break;
+			}
+		case Qt::Key_AsciiCircum:
+			{
+				QString dspText = ui->calcEntry->text();
+
+				if (curOper == OPERATION_NONE || curOper == OPERATION_ERROR) \
+					lastAns = dspText.toDouble();
+
+				curOper = OPERATION_SUBTRACT;
+
+				inputMode = false;
+				if (setNum == true || calcInstaAns(curOper) == true) {
+					setNum = true;
+
+					QString dspText = ui->calcEntry->text();
+					double dspMem = dspText.toDouble();
+					calcAnswer(&curOper, dspMem, &lastAns, altMode);
+
+					curOper == OPERATION_ERROR ? ui->calcEntry->setText("ERROR") : \
+						ui->calcEntry->setText(QString::number(lastAns, 'g', \
+						MAX_DISPLAY_NUM));
+				} else {
+					setNum = true;
+				}
+				break;
+			}
+		case Qt::Key_Equal:
+			{
+				if (setNum == true) {
+					setNum = false;
+					inputMode = false;
+
+					QString dspText = ui->calcEntry->text();
+					double dspMem = dspText.toDouble();
+					calcAnswer(&curOper, dspMem, &lastAns, altMode);
+
+					curOper == OPERATION_ERROR ? ui->calcEntry->setText("ERROR") : \
+						ui->calcEntry->setText(QString::number(lastAns, 'g', \
+						MAX_DISPLAY_NUM));
+
+					curOper = OPERATION_NONE;
+				}
+				break;
+			}
+		case Qt::Key_Return:
+			{
+				if (setNum == true) {
+					setNum = false;
+					inputMode = false;
+
+					QString dspText = ui->calcEntry->text();
+					double dspMem = dspText.toDouble();
+					calcAnswer(&curOper, dspMem, &lastAns, altMode);
+
+					curOper == OPERATION_ERROR ? ui->calcEntry->setText("ERROR") : \
+						ui->calcEntry->setText(QString::number(lastAns, 'g', \
+						MAX_DISPLAY_NUM));
+
+					curOper = OPERATION_NONE;
+				}
+				break;
+			}
+		case Qt::Key_Enter:
+			{
+				if (setNum == true) {
+					setNum = false;
+					inputMode = false;
+
+					QString dspText = ui->calcEntry->text();
+					double dspMem = dspText.toDouble();
+					calcAnswer(&curOper, dspMem, &lastAns, altMode);
+
+					curOper == OPERATION_ERROR ? ui->calcEntry->setText("ERROR") : \
+						ui->calcEntry->setText(QString::number(lastAns, 'g', \
+						MAX_DISPLAY_NUM));
+
+					curOper = OPERATION_NONE;
 				}
 				break;
 			}
