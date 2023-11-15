@@ -1,5 +1,5 @@
-#ifndef MAINBUTTON_H
-#define MAINBUTTON_H
+#ifndef MACROS_H
+#define MACROS_H
 
 /*
  *  Basicalc - Simple Qt Calculator
@@ -19,23 +19,10 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <QPushButton>
+#define OPERATION_NONE 0
+#define OPERATION_ADD 1
+#define OPERATION_SUBTRACT 2
+#define OPERATION_MULTIPLY 3
+#define OPERATION_DIVIDE 4
 
-#include "macros.h"
-
-class MainButton : public QPushButton {
-
-	Q_OBJECT
-
-	public:
-		MainButton(QWidget *parent = nullptr);
-		~MainButton();
-
-		int get_button_val();
-		void set_button_val(int _enum);
-
-	private:
-		int mbtn_val = 0;
-};
-
-#endif //MAINBUTTON_H
+#endif //MACROS_H

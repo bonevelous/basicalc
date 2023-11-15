@@ -21,6 +21,7 @@
 
 #include <QMainWindow>
 #include <QTextStream>
+#include <QString>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -35,7 +36,8 @@ class MainWindow : public QMainWindow {
 		~MainWindow();
 
 	private slots:
-		void test_button();
+		void add_digit();
+		void cls_display();
 
 	private:
 		Ui::MainWindow *ui;

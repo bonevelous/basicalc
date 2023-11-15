@@ -19,14 +19,6 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-typedef enum main_button_enum {
-	MAIN_FUNC_NONE,
-	MAIN_FUNC_DIGIT,
-	MAIN_FUNC_OPERATION,
-	MAIN_FUNC_ANSWER,
-	MAIN_FUNC_CLEAR
-} main_button_enum;
-
 typedef enum operation_enum {
 	OPERATION_NONE,
 	OPERATION_ADD,

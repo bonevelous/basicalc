@@ -18,16 +18,16 @@
 
 #include "mainbutton.h"
 
-MainButton::MainButton(QWidget *parent) : QPushButton (parent) {
+MainButton::MainButton(QWidget *parent) : QPushButton(parent) {
 }
 
 MainButton::~MainButton() {
 }
 
-void MainButton::set_button_type (main_button_enum _enum) {
-	mbutton_type = _enum;
+int MainButton::get_button_val () {
+	return mbtn_val;
 }
 
-void MainButton::set_button_val (operation_enum _enum) {
-	mbutton_val = _enum;
+void MainButton::set_button_val (int _enum) {
+	mbtn_val = _enum;
 }

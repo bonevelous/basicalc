@@ -19,18 +19,33 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-MainButton *testButton;
+QPushButton *cls_button;
+MainButton *num_button[10];
 
-MainWindow::MainWindow (QWidget *parent) :
+MainWindow::MainWindow(QWidget *parent) :
 	QMainWindow (parent), ui(new Ui::MainWindow) {
 
 	ui->setupUi(this);
 
-	testButton = MainWindow::findChild<MainButton *>("clsButton");
-	connect(testButton, &MainButton::released, this, &MainWindow::test_button);
+	for (int i = 0; i < 10; i++) {
+		QString curDigit = "digit_button" + QString::number(i);
+		num_button[i] = MainWindow::findChild<MainButton *>(curDigit);
+		connect(num_button[i], &MainButton::released, this, &MainWindow::add_digit);
+		num_button[i]->set_button_val(i);
+	}
+
+	cls_button = MainWindow::findChild<QPushButton *>("clsButton");
+	connect(cls_button, &QPushButton::released, this, &MainWindow::cls_display);
 }
 
-void MainWindow::test_button () {
+void MainWindow::add_digit() {
+	MainButton *button = (MainButton *)sender();
+	QTextStream out(stdout);
+
+	out << "Digit " << button->get_button_val() << Qt::endl;
+}
+
+void MainWindow::cls_display () {
 	QTextStream out(stdout);
 
 	out << "Hello World!" << Qt::endl;
