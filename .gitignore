@@ -9,3 +9,4 @@ ui_*.h
 *.dll
 *.a
 *.so
+.qmake.stash

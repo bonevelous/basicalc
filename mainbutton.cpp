@@ -1,6 +1,3 @@
-#ifndef MAIN_WINDOW_H
-#define MAIN_WINDOW_H
-
 /*
  *  Basicalc - Simple Qt Calculator
  *  Copyright (C) 2023	Bonevelous
@@ -19,26 +16,18 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <QMainWindow>
-#include <QTextStream>
+#include "mainbutton.h"
 
-QT_BEGIN_NAMESPACE
-namespace Ui { class MainWindow; }
-QT_END_NAMESPACE
+MainButton::MainButton(QWidget *parent) : QPushButton (parent) {
+}
 
-class MainWindow : public QMainWindow {
+MainButton::~MainButton() {
+}
 
-	Q_OBJECT
+void MainButton::set_button_type (main_button_enum _enum) {
+	mbutton_type = _enum;
+}
 
-	public:
-		MainWindow(QWidget *parent = nullptr);
-		~MainWindow();
-
-	private slots:
-		void test_button();
-
-	private:
-		Ui::MainWindow *ui;
-};
-
-#endif //MAIN_WINDOW_H
+void MainButton::set_button_val (operation_enum _enum) {
+	mbutton_val = _enum;
+}
