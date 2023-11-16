@@ -40,7 +40,7 @@
     <item>
      <layout class="QGridLayout" name="gridLayout">
       <item row="0" column="4">
-       <widget class="MainButton" name="subtractButton">
+       <widget class="CalcButton" name="subtractButton">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
           <horstretch>0</horstretch>
@@ -53,7 +53,7 @@
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="MainButton" name="divideButton">
+       <widget class="CalcButton" name="divideButton">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
           <horstretch>0</horstretch>
@@ -66,7 +66,7 @@
        </widget>
       </item>
       <item row="2" column="0">
-       <widget class="MainButton" name="digit_button4">
+       <widget class="CalcButton" name="digit_button4">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
           <horstretch>0</horstretch>
@@ -79,7 +79,7 @@
        </widget>
       </item>
       <item row="2" column="1">
-       <widget class="MainButton" name="digit_button5">
+       <widget class="CalcButton" name="digit_button5">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
           <horstretch>0</horstretch>
@@ -92,7 +92,7 @@
        </widget>
       </item>
       <item row="1" column="1">
-       <widget class="MainButton" name="digit_button8">
+       <widget class="CalcButton" name="digit_button8">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
           <horstretch>0</horstretch>
@@ -105,7 +105,7 @@
        </widget>
       </item>
       <item row="1" column="0">
-       <widget class="MainButton" name="digit_button7">
+       <widget class="CalcButton" name="digit_button7">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
           <horstretch>0</horstretch>
@@ -118,7 +118,7 @@
        </widget>
       </item>
       <item row="3" column="1">
-       <widget class="MainButton" name="digit_button2">
+       <widget class="CalcButton" name="digit_button2">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
           <horstretch>0</horstretch>
@@ -131,7 +131,7 @@
        </widget>
       </item>
       <item row="0" column="0">
-       <widget class="QPushButton" name="clsButton">
+       <widget class="CalcButton" name="clsButton">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
           <horstretch>0</horstretch>
@@ -144,7 +144,7 @@
        </widget>
       </item>
       <item row="0" column="2">
-       <widget class="MainButton" name="multiplyButton">
+       <widget class="CalcButton" name="multiplyButton">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
           <horstretch>0</horstretch>
@@ -157,7 +157,7 @@
        </widget>
       </item>
       <item row="2" column="2">
-       <widget class="MainButton" name="digit_button6">
+       <widget class="CalcButton" name="digit_button6">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
           <horstretch>0</horstretch>
@@ -170,7 +170,7 @@
        </widget>
       </item>
       <item row="3" column="2">
-       <widget class="MainButton" name="digit_button3">
+       <widget class="CalcButton" name="digit_button3">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
           <horstretch>0</horstretch>
@@ -183,7 +183,7 @@
        </widget>
       </item>
       <item row="3" column="0">
-       <widget class="MainButton" name="digit_button1">
+       <widget class="CalcButton" name="digit_button1">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
           <horstretch>0</horstretch>
@@ -196,7 +196,7 @@
        </widget>
       </item>
       <item row="1" column="2">
-       <widget class="MainButton" name="digit_button9">
+       <widget class="CalcButton" name="digit_button9">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
           <horstretch>0</horstretch>
@@ -209,7 +209,7 @@
        </widget>
       </item>
       <item row="4" column="2">
-       <widget class="QPushButton" name="pointButton">
+       <widget class="CalcButton" name="pointButton">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
           <horstretch>0</horstretch>
@@ -222,7 +222,7 @@
        </widget>
       </item>
       <item row="1" column="4" rowspan="2">
-       <widget class="MainButton" name="addButton">
+       <widget class="CalcButton" name="addButton">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
           <horstretch>0</horstretch>
@@ -235,7 +235,7 @@
        </widget>
       </item>
       <item row="4" column="0" colspan="2">
-       <widget class="MainButton" name="digit_button0">
+       <widget class="CalcButton" name="digit_button0">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
           <horstretch>0</horstretch>
@@ -248,7 +248,7 @@
        </widget>
       </item>
       <item row="3" column="4" rowspan="2">
-       <widget class="MainButton" name="answerButton">
+       <widget class="CalcButton" name="answerButton">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
           <horstretch>0</horstretch>
@@ -278,9 +278,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>MainButton</class>
+   <class>CalcButton</class>
    <extends>QPushButton</extends>
-   <header>mainbutton.h</header>
+   <header>calcbutton.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

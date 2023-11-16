@@ -27,11 +27,11 @@ VERSION += $${VERSION_MAJOR}.$${VERSION_MINOR}.$${VERSION_BUILD}
 SOURCES += \
 	main.cpp \
 	mainwindow.cpp \
-	mainbutton.cpp
+	calcbutton.cpp
 
 HEADERS += \
 	mainwindow.h \
-	mainbutton.h
+	calcbutton.h
 
 FORMS += \
 	mainwindow.ui

@@ -1,5 +1,5 @@
-#ifndef MAINBUTTON_H
-#define MAINBUTTON_H
+#ifndef CALC_BUTTON_H
+#define CALC_BUTTON_H
 
 /*
  *  Basicalc - Simple Qt Calculator
@@ -21,21 +21,23 @@
 
 #include <QPushButton>
 
-#include "macros.h"
+#include "enums.h"
 
-class MainButton : public QPushButton {
-
-	Q_OBJECT
-
+class CalcButton : public QPushButton {
 	public:
-		MainButton(QWidget *parent = nullptr);
-		~MainButton();
+		CalcButton(QWidget *parent = nullptr);
+		~CalcButton();
 
-		int btn_val();
-		void set_btn_val(int _enum);
+		int num_val();
+		void set_num_val(int n_num_val);
+
+		function b_func();
+		void set_b_func(function n_b_func);
 
 	private:
-		int mbtn_val = 0;
+		int _num_val = 0;
+		function _b_func = FUNC_NONE;
 };
 
-#endif //MAINBUTTON_H
+#endif //CALC_BUTTON_H
+

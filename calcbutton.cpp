@@ -16,18 +16,27 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "mainbutton.h"
+#include "calcbutton.h"
 
-MainButton::MainButton(QWidget *parent) : QPushButton(parent) {
+CalcButton::CalcButton(QWidget *parent) : QPushButton(parent) {
 }
 
-MainButton::~MainButton() {
+CalcButton::~CalcButton() {
 }
 
-int MainButton::btn_val () {
-	return mbtn_val;
+function CalcButton::b_func() {
+	return _b_func;
 }
 
-void MainButton::set_btn_val (int _enum) {
-	mbtn_val = _enum;
+void CalcButton::set_b_func(function n_b_func) {
+	_b_func = n_b_func;
 }
+
+int CalcButton::num_val() {
+	return _num_val;
+}
+
+void CalcButton::set_num_val(int n_num_val) {
+	_num_val = n_num_val;
+}
+

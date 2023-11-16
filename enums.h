@@ -19,12 +19,13 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-typedef enum operation_enum {
-	OPERATION_NONE,
-	OPERATION_ADD,
-	OPERATION_SUBTRACT,
-	OPERATION_MULTIPLY,
-	OPERATION_DIVIDE
-} operation_enum;
+typedef enum function {
+	FUNC_NONE,
+	FUNC_ADD,
+	FUNC_SUBTRACT,
+	FUNC_MULTIPLY,
+	FUNC_DIVIDE,
+	FUNC_ANSWER
+} function;
 
 #endif //ENUMS_H

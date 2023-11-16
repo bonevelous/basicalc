@@ -19,12 +19,10 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#define MAXDIGITS 16
+//#define MAXDIGITS 16
 
-#define OPERATION_NONE 0
-#define OPERATION_ADD 1
-#define OPERATION_SUBTRACT 2
-#define OPERATION_MULTIPLY 3
-#define OPERATION_DIVIDE 4
+#define NOT_FRAC 0
+#define IS_FRAC 1
+#define FRAC_UNCLEARED 2
 
 #endif //MACROS_H

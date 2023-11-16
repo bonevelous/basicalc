@@ -22,6 +22,7 @@
 #include <QMainWindow>
 #include <QTextStream>
 #include <QString>
+#include <cmath>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -39,6 +40,12 @@ class MainWindow : public QMainWindow {
 		void add_digit();
 		void cls_display();
 		void add_point();
+		void operation();
+
+	private:
+		void set_disp();
+		void clear_calc();
+		void type_disp(int _num);
 
 	private:
 		Ui::MainWindow *ui;
