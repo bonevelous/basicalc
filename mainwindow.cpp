@@ -27,7 +27,8 @@ int is_frac = NOT_FRAC;
 bool typing = false;
 
 double last_ans = 0;
-double cur_ans = 0;
+double left_hand = 0;
+double right_hand = 0;
 
 function last_func = FUNC_NONE;
 
@@ -56,9 +57,17 @@ MainWindow::MainWindow(QWidget *parent) :
 	add_button->set_b_func(FUNC_ADD);
 	connect(add_button, &CalcButton::released, this, &MainWindow::operation);
 
-	/*sub_button = MainWindow::findChild<CalcButton *>("subtractButton");
+	sub_button = MainWindow::findChild<CalcButton *>("subtractButton");
 	sub_button->set_b_func(FUNC_SUBTRACT);
-	connect(sub_button, &CalcButton::released, this, &MainWindow::operation);*/
+	connect(sub_button, &CalcButton::released, this, &MainWindow::operation);
+
+	mlt_button = MainWindow::findChild<CalcButton *>("multiplyButton");
+	mlt_button->set_b_func(FUNC_MULTIPLY);
+	connect(mlt_button, &CalcButton::released, this, &MainWindow::operation);
+
+	div_button = MainWindow::findChild<CalcButton *>("divideButton");
+	div_button->set_b_func(FUNC_DIVIDE);
+	connect(div_button, &CalcButton::released, this, &MainWindow::operation);
 
 	ans_button = MainWindow::findChild<CalcButton *>("answerButton");
 	ans_button->set_b_func(FUNC_ANSWER);
@@ -74,21 +83,11 @@ MainWindow::MainWindow(QWidget *parent) :
 void MainWindow::clear_calc() {
 	last_func = FUNC_NONE;
 	last_ans = 0;
-	cur_ans = 0;
+	left_hand = 0;
+	right_hand = 0;
 	typing = false;
 	is_frac = NOT_FRAC;
 	last_func = FUNC_NONE;
-}
-
-void MainWindow::type_disp(int _num) {
-	if (ui->calcDisp->text() == "0") {
-		if (_num == 0 && is_frac == NOT_FRAC) ui->calcDisp->setText("0");
-		else ui->calcDisp->setText(QString::number(_num));
-	}
-	else {
-		QString newDisp = ui->calcDisp->text() + QString::number(_num);
-		ui->calcDisp->setText(newDisp);
-	}
 }
 
 void MainWindow::add_digit() {
@@ -119,16 +118,31 @@ void MainWindow::add_point() {
 	is_frac = IS_FRAC;
 }
 
-void MainWindow::set_disp() {
-	QString new_ans = (is_frac == NOT_FRAC) ? QString::number((int) cur_ans) :
-		QString::number(cur_ans);
-	ui->calcDisp->setText(new_ans);
+void MainWindow::type_disp(double _num) {
+	if (ui->calcDisp->text() == "0") {
+		if (_num == 0 && is_frac == NOT_FRAC) ui->calcDisp->setText("0");
+		else ui->calcDisp->setText(QString::number(_num));
+	}
+	else {
+		QString newDisp = ui->calcDisp->text() + QString::number(_num);
+		ui->calcDisp->setText(newDisp);
+	}
 }
 
 void MainWindow::operation() {
 	CalcButton *_btn = (CalcButton *)sender();
 	function m_func;
 	is_frac = FRAC_UNCLEARED;
+
+	if (last_func == FUNC_NONE) { 
+		last_ans = ui->calcDisp->text().toDouble();
+		typing = false;
+	}
+	else {
+		right_hand = ui->calcDisp->text().toDouble();
+	}
+
+	left_hand = last_ans;
 
 	if (_btn->b_func() != FUNC_ANSWER) {
 		m_func = _btn->b_func();
@@ -141,15 +155,25 @@ void MainWindow::operation() {
 	if (typing == true) {
 		switch (m_func) {
 			case FUNC_ADD:
-				last_ans = cur_ans;
-				cur_ans = cur_ans + ui->calcDisp->text().toDouble();
-				MainWindow::set_disp();
+				last_ans = left_hand + right_hand;
+				break;
+			case FUNC_SUBTRACT:
+				last_ans = left_hand - right_hand;
+				break;
+			case FUNC_MULTIPLY:
+				last_ans = left_hand * right_hand;
+				break;
+			case FUNC_DIVIDE:
+				last_ans = left_hand * right_hand;
 				break;
 			default:
 				break;
 		}
+			ui->calcDisp->setText(QString::number(last_ans));
+
 		typing = false;
 	}
+
 }
 
 void MainWindow::cls_display() {

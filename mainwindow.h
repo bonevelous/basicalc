@@ -43,9 +43,8 @@ class MainWindow : public QMainWindow {
 		void operation();
 
 	private:
-		void set_disp();
 		void clear_calc();
-		void type_disp(int _num);
+		void type_disp(double _num);
 
 	private:
 		Ui::MainWindow *ui;

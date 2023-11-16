@@ -19,8 +19,6 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-//#define MAXDIGITS 16
-
 #define NOT_FRAC 0
 #define IS_FRAC 1
 #define FRAC_UNCLEARED 2
