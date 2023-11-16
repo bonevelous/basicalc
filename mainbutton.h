@@ -31,8 +31,8 @@ class MainButton : public QPushButton {
 		MainButton(QWidget *parent = nullptr);
 		~MainButton();
 
-		int get_button_val();
-		void set_button_val(int _enum);
+		int btn_val();
+		void set_btn_val(int _enum);
 
 	private:
 		int mbtn_val = 0;

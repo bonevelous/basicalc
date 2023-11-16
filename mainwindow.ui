@@ -16,10 +16,11 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <widget class="QLineEdit" name="calcDisplay">
+     <widget class="QLineEdit" name="calcDisp">
       <property name="font">
        <font>
         <family>Noto Sans Mono</family>
+        <pointsize>20</pointsize>
        </font>
       </property>
       <property name="layoutDirection">

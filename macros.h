@@ -19,6 +19,8 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+#define MAXDIGITS 16
+
 #define OPERATION_NONE 0
 #define OPERATION_ADD 1
 #define OPERATION_SUBTRACT 2

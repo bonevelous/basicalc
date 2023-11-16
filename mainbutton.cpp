@@ -24,10 +24,10 @@ MainButton::MainButton(QWidget *parent) : QPushButton(parent) {
 MainButton::~MainButton() {
 }
 
-int MainButton::get_button_val () {
+int MainButton::btn_val () {
 	return mbtn_val;
 }
 
-void MainButton::set_button_val (int _enum) {
+void MainButton::set_btn_val (int _enum) {
 	mbtn_val = _enum;
 }

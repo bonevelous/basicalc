@@ -20,7 +20,11 @@
 #include "ui_mainwindow.h"
 
 QPushButton *cls_button;
+QPushButton *pnt_button;
 MainButton *num_button[10];
+
+bool disp_cleared = true;
+bool fractional = false;
 
 MainWindow::MainWindow(QWidget *parent) :
 	QMainWindow (parent), ui(new Ui::MainWindow) {
@@ -31,24 +35,46 @@ MainWindow::MainWindow(QWidget *parent) :
 		QString curDigit = "digit_button" + QString::number(i);
 		num_button[i] = MainWindow::findChild<MainButton *>(curDigit);
 		connect(num_button[i], &MainButton::released, this, &MainWindow::add_digit);
-		num_button[i]->set_button_val(i);
+		num_button[i]->set_btn_val(i);
 	}
 
 	cls_button = MainWindow::findChild<QPushButton *>("clsButton");
 	connect(cls_button, &QPushButton::released, this, &MainWindow::cls_display);
+
+	pnt_button = MainWindow::findChild<QPushButton *>("pointButton");
+	connect(pnt_button, &QPushButton::released, this, &MainWindow::add_point);
 }
 
 void MainWindow::add_digit() {
-	MainButton *button = (MainButton *)sender();
+	MainButton *_btn = (MainButton *)sender();
 	QTextStream out(stdout);
 
-	out << "Digit " << button->get_button_val() << Qt::endl;
+	if (disp_cleared == true) {
+		if (_btn->btn_val() > 0) {
+			ui->calcDisp->setText(QString::number(_btn->btn_val()));
+			disp_cleared = false;
+		}
+	} else if (ui->calcDisp->text().length() < MAXDIGITS) {
+		QString newDisp = ui->calcDisp->text() + QString::number(_btn->btn_val());
+		ui->calcDisp->setText(newDisp);
+	}
 }
 
 void MainWindow::cls_display () {
 	QTextStream out(stdout);
 
-	out << "Hello World!" << Qt::endl;
+	ui->calcDisp->setText("0");
+
+	disp_cleared = true;
+	fractional = false;
+}
+
+void MainWindow::add_point() {
+	if (fractional == false && ui->calcDisp->text().length() < MAXDIGITS - 1) {
+		QString newDisp = ui->calcDisp->text() + ".";
+		ui->calcDisp->setText(newDisp);
+		fractional = true;
+	}
 }
 
 MainWindow::~MainWindow() {

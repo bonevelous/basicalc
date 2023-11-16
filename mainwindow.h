@@ -38,6 +38,7 @@ class MainWindow : public QMainWindow {
 	private slots:
 		void add_digit();
 		void cls_display();
+		void add_point();
 
 	private:
 		Ui::MainWindow *ui;
