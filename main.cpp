@@ -17,10 +17,40 @@
  */
 
 #include <QApplication>
+#include <iostream>
+#include <getopt.h>
 
 #include "mainwindow.h"
 
+static struct option longopt[] = {
+	{"help", 0, 0, 'h'},
+	{"version", 0, 0, 'v'},
+	{0, 0, 0, 0}
+};
+
 int main (int argc, char **argv) {
+
+	int index = 0;
+	int c= 0;
+
+	c = getopt_long (argc, argv, "hv", longopt, &index);
+
+	switch (c) {
+		case 'h':
+			std::cout << "Usage: ./basicalc [OPTION]..." << std::endl;
+			std::cout << "\t--help\t| -h : This help message" << std::endl;
+			std::cout << "\t--version\t| -v : Version Number" << std::endl;
+			return 0;
+			break;
+		case 'v':
+			std::cout << VERSION_MAJOR << '.' << VERSION_MINOR << \
+				'.' << VERSION_BUILD << std::endl;
+			return 0;
+			break;
+		default:
+			break;
+	}
+
 	QApplication app (argc, argv);
 
 	MainWindow win;
