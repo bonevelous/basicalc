@@ -41,6 +41,8 @@ class MainWindow : public QMainWindow {
 		void cls_display();
 		void add_point();
 		void operation();
+		void quik_ans();
+		void invert();
 
 	private:
 		void clear_calc();

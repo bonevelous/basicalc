@@ -17,7 +17,6 @@
  */
 
 #include "macros.h"
-#include "enums.h"
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
@@ -34,12 +33,20 @@ function last_func = FUNC_NONE;
 
 CalcButton *num_button[10];
 CalcButton *pnt_button;
+
 CalcButton *cls_button;
+CalcButton *inv_button;
+CalcButton *ans_button;
+
 CalcButton *add_button;
 CalcButton *sub_button;
 CalcButton *mlt_button;
 CalcButton *div_button;
-CalcButton *ans_button;
+CalcButton *mod_button;
+
+CalcButton *pow2_button;
+CalcButton *sqrt_button;
+CalcButton *pi_button;
 
 MainWindow::MainWindow(QWidget *parent) :
 	QMainWindow (parent), ui(new Ui::MainWindow) {
@@ -68,6 +75,25 @@ MainWindow::MainWindow(QWidget *parent) :
 	div_button = MainWindow::findChild<CalcButton *>("divideButton");
 	div_button->set_b_func(FUNC_DIVIDE);
 	connect(div_button, &CalcButton::released, this, &MainWindow::operation);
+
+	mod_button = MainWindow::findChild<CalcButton *>("modulusButton");
+	mod_button->set_b_func(FUNC_MODULUS);
+	connect(mod_button, &CalcButton::released, this, &MainWindow::operation);
+
+	pow2_button = MainWindow::findChild<CalcButton *>("squareButton");
+	pow2_button->set_b_func(FUNC_SQUARE);
+	connect(pow2_button, &CalcButton::released, this, &MainWindow::quik_ans);
+
+	sqrt_button = MainWindow::findChild<CalcButton *>("s_rootButton");
+	sqrt_button->set_b_func(FUNC_SROOT);
+	connect(sqrt_button, &CalcButton::released, this, &MainWindow::quik_ans);
+
+	pi_button = MainWindow::findChild<CalcButton *>("piButton");
+	pi_button->set_b_func(FUNC_PI);
+	connect(pi_button, &CalcButton::released, this, &MainWindow::quik_ans);
+
+	inv_button = MainWindow::findChild<CalcButton *>("invertButton");
+	connect(inv_button, &CalcButton::released, this, &MainWindow::invert);
 
 	ans_button = MainWindow::findChild<CalcButton *>("answerButton");
 	ans_button->set_b_func(FUNC_ANSWER);
@@ -118,6 +144,12 @@ void MainWindow::add_point() {
 	is_frac = IS_FRAC;
 }
 
+void MainWindow::invert() {
+	last_func = FUNC_NONE;
+	double new_num = ui->calcDisp->text().toDouble() * -1;
+	ui->calcDisp->setText(QString::number(new_num));
+}
+
 void MainWindow::type_disp(double _num) {
 	if (ui->calcDisp->text() == "0") {
 		if (_num == 0 && is_frac == NOT_FRAC) ui->calcDisp->setText("0");
@@ -164,16 +196,45 @@ void MainWindow::operation() {
 				last_ans = left_hand * right_hand;
 				break;
 			case FUNC_DIVIDE:
-				last_ans = left_hand * right_hand;
+				last_ans = left_hand / right_hand;
+				break;
+			case FUNC_MODULUS:
+				last_ans = fmod(left_hand, right_hand);
 				break;
 			default:
 				break;
 		}
-			ui->calcDisp->setText(QString::number(last_ans));
+
+		ui->calcDisp->setText(QString::number(last_ans));
 
 		typing = false;
 	}
+}
 
+void MainWindow::quik_ans() {
+	CalcButton *_btn = (CalcButton *)sender();
+	function m_func;
+	typing = false;
+	last_func = FUNC_ANSWER;
+	m_func = _btn->b_func();
+
+	left_hand = ui->calcDisp->text().toDouble();
+
+	switch (m_func) {
+		case FUNC_SQUARE:
+			last_ans = pow(left_hand, 2);
+			break;
+		case FUNC_SROOT:
+			last_ans = sqrt(left_hand);
+			break;
+		case FUNC_PI:
+			last_ans = M_PI;
+			break;
+		default:
+			break;
+	}
+
+	ui->calcDisp->setText(QString::number(last_ans));
 }
 
 void MainWindow::cls_display() {

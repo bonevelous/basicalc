@@ -25,6 +25,10 @@ typedef enum function {
 	FUNC_SUBTRACT,
 	FUNC_MULTIPLY,
 	FUNC_DIVIDE,
+	FUNC_SQUARE,
+	FUNC_SROOT,
+	FUNC_PI,
+	FUNC_MODULUS,
 	FUNC_ANSWER
 } function;
 
